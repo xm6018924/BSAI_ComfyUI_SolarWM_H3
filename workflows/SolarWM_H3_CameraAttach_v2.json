@@ -138,7 +138,7 @@
         {"name": "positive_正向条件", "type": "CONDITIONING", "link": 6}
       ],
       "outputs": [
-        {"name": "model_模型", "type": "MODEL", "links": [11, 12]}
+        {"name": "model_模型", "type": "MODEL", "links": [11]}
       ],
       "title": "8. ★ BSAI相机轨迹注入 | Camera Trajectory Inject ★",
       "properties": {"Node name for S&R": "BSAI_SolarWM_H3_CameraAttach"},
@@ -274,7 +274,6 @@
     [9, 7, 0, 8, 1, "LATENT"],
     [10, 7, 0, 9, 3, "LATENT"],
     [11, 8, 0, 9, 0, "MODEL"],
-    [12, 8, 0, 9, 0, "MODEL"],
     [13, 9, 0, 12, 0, "LATENT"],
     [14, 9, 0, 13, 0, "LATENT"],
     [15, 10, 0, 12, 1, "VAE"],
