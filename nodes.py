@@ -261,21 +261,21 @@ class BSAI_SolarWM_H3_CameraTrajectory:
     CATEGORY = "BSAI/SolarWM-H3"
     DESCRIPTION = "生成 SolarWM-H3 相机 c2w 轨迹: orbit环绕/dolly推拉/pan摇/tilt俯仰"
 
-    def generate(self, num_frames, mode, orbit_angle, orbit_radius, orbit_height,
-                 start_angle, dolly_speed, pan_speed, tilt_speed):
+    def generate(self, 总帧数_num_frames, 相机模式_mode, 环绕角度_orbit_angle, 环绕半径_orbit_radius, 相机高度_orbit_height,
+                 起始角度_start_angle, 推拉速度_dolly_speed, 摇摄速度_pan_speed, 俯仰速度_tilt_speed):
         poses = generate_camera_trajectory(
-            num_frames=num_frames,
-            mode=mode,
-            orbit_angle=orbit_angle,
-            orbit_radius=orbit_radius,
-            orbit_height=orbit_height,
-            start_angle=start_angle,
-            dolly_speed=dolly_speed,
-            pan_speed=pan_speed,
-            tilt_speed=tilt_speed,
+            num_frames=总帧数_num_frames,
+            mode=相机模式_mode,
+            orbit_angle=环绕角度_orbit_angle,
+            orbit_radius=环绕半径_orbit_radius,
+            orbit_height=相机高度_orbit_height,
+            start_angle=起始角度_start_angle,
+            dolly_speed=推拉速度_dolly_speed,
+            pan_speed=摇摄速度_pan_speed,
+            tilt_speed=俯仰速度_tilt_speed,
         )
-        print(f"[BSAI-SolarWM-H3] 相机轨迹生成: {mode}, {num_frames}帧, "
-              f"角度={orbit_angle}°, 距离={orbit_radius}")
+        print(f"[BSAI-SolarWM-H3] 相机轨迹生成: {相机模式_mode}, {总帧数_num_frames}帧, "
+              f"角度={环绕角度_orbit_angle}, 距离={环绕半径_orbit_radius}")
         return (poses,)
 
 
@@ -443,14 +443,14 @@ class BSAI_SolarWM_H3_Loader:
     CATEGORY = "BSAI/SolarWM-H3"
     DESCRIPTION = "加载 H3 + SolarWM Stage2 LoRA + 安装 fused_prope 相机补丁"
 
-    def load(self, model_name, precision, solar_lora_name, solar_lora_strength,
-             camera_prope_dim_start, camera_prope_dim_end, num_heads):
+    def load(self, 扩散模型_model_name, 精度_precision, SolarWMLoRA, LoRA强度_solar_lora_strength,
+             ProPE起始_dim_start, ProPE结束_dim_end, Attention头数_num_heads):
         from comfy.sd import load_diffusion_model
 
         # 安装相机补丁 (一次性)
         _install_solarwm_attention_patch()
 
-        model_path = folder_paths.get_full_path("diffusion_models", 扩散模型_model_name) if folder_paths else model_name
+        model_path = folder_paths.get_full_path("diffusion_models", 扩散模型_model_name) if folder_paths else 扩散模型_model_name
         model = load_diffusion_model(model_path)
 
         # 设置 shift (与 Sol-H3 一致)
@@ -467,35 +467,35 @@ class BSAI_SolarWM_H3_Loader:
 
         # 加载 SolarWM LoRA
         lora_state = "OFF"
-        if "SolarWM LoRA" and "SolarWM LoRA".strip() and solar_lora_name.strip().lower() != "none":
-            lora_path = folder_paths.get_full_path("loras", solar_lora_name) if folder_paths else solar_lora_name
+        if SolarWMLoRA and SolarWMLoRA.strip().lower() != "none":
+            lora_path = folder_paths.get_full_path("loras", SolarWMLoRA) if folder_paths else SolarWMLoRA
             if lora_path and os.path.exists(lora_path):
                 try:
                     sd = _load_torch_file_safe(lora_path)
                     # SolarWM LoRA: 支持 ema.pt (diffusers格式) 和 safetensors
                     lora_patches = _load_solarwm_lora(lora_path)
                     if lora_patches:
-                        n = len(model.add_patches(lora_patches, strength_patch=solar_lora_strength, strength_model=1.0))
-                        lora_state = f"{solar_lora_name} x{solar_lora_strength:.2f}"
-                        print(f"[BSAI-SolarWM-H3] SolarWM LoRA 已加载: {solar_lora_name} "
-                              f"strength={solar_lora_strength:.2f} ({n}/{len(lora_patches)} patches)")
+                        n = len(model.add_patches(lora_patches, strength_patch=LoRA强度_solar_lora_strength, strength_model=1.0))
+                        lora_state = f"{SolarWMLoRA} x{LoRA强度_solar_lora_strength:.2f}"
+                        print(f"[BSAI-SolarWM-H3] SolarWM LoRA 已加载: {SolarWMLoRA} "
+                              f"strength={LoRA强度_solar_lora_strength:.2f} ({n}/{len(lora_patches)} patches)")
                     else:
-                        print(f"[BSAI-SolarWM-H3] 警告: LoRA {solar_lora_name} 无匹配 key")
+                        print(f"[BSAI-SolarWM-H3] 警告: LoRA {SolarWMLoRA} 无匹配 key")
                 except Exception as e:
                     print(f"[BSAI-SolarWM-H3] LoRA 加载失败: {e}")
             else:
-                print(f"[BSAI-SolarWM-H3] LoRA 文件不存在, 跳过: {solar_lora_name}")
+                print(f"[BSAI-SolarWM-H3] LoRA 文件不存在, 跳过: {SolarWMLoRA}")
 
         # 存储相机配置到 model
         model.model_options["transformer_options"]["solarwm_prope_config"] = {
-            "dim_start": camera_prope_dim_start,
-            "dim_end": camera_prope_dim_end,
-            "num_heads": num_heads,
+            "dim_start": ProPE起始_dim_start,
+            "dim_end": ProPE结束_dim_end,
+            "num_heads": Attention头数_num_heads,
         }
 
-        info = (f"SolarWM-H3: {model_name} | LoRA={lora_state} | "
-                f"ProPE=[{camera_prope_dim_start}:{camera_prope_dim_end}] | "
-                f"heads={num_heads}")
+        info = (f"SolarWM-H3: {扩散模型_model_name} | LoRA={lora_state} | "
+                f"ProPE=[{ProPE起始_dim_start}:{ProPE结束_dim_end}] | "
+                f"heads={Attention头数_num_heads}")
         print(f"[BSAI-SolarWM-H3] {info}")
 
         return (model, info)
