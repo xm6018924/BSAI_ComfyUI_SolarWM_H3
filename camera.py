@@ -220,7 +220,7 @@ def c2w_to_axis_angle(R):
     return (axis * theta).float()
 
 
-def encode_camera_prope(c2w_poses, camera_prope_dim=32, num_heads=40, seed=42):
+def encode_camera_prope(c2w_poses, camera_prope_dim=32, num_heads=56, seed=42):
     """将 c2w 序列编码为 ProPE 相机嵌入。
 
     流程:

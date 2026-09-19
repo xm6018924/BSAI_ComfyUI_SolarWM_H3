@@ -120,16 +120,12 @@ def _install_solarwm_attention_patch():
             q = self.q_norm(q.view(s, heads, head_dim))
             k = self.k_norm(k.view(s, heads, head_dim))
 
-        # === 相机 fused-PRoPE 旋转注入 ===
+        # === 相机 fused-PRoPE 加法嵌入注入 ===
         cam_dim_start = transformer_options.get("solarwm_cam_dim_start", 96)
         cam_dim_end = transformer_options.get("solarwm_cam_dim_end", 128)
         cam_per_head = cam_dim_end - cam_dim_start  # 32
-        cam_w2c = transformer_options.get("solarwm_cam_w2c")
 
-        if cam_w2c is None or cam_per_head != 32:
-            # 无相机矩阵, 走原始 attention
-            pass
-        else:
+        if cam_emb is not None and cam_per_head == 32:
             layout = transformer_options.get("minimax_h3_layout")
             if layout is not None and hasattr(layout, "segments"):
                 video_a = video_b = 0
@@ -143,44 +139,38 @@ def _install_solarwm_attention_patch():
                     video_t = pos_ids[video_a:video_b, 0].to(q.device)
                     t_min = video_t[0].item(); t_max = video_t[-1].item()
                     t_range = t_max - t_min
-                    n_cam = cam_w2c.shape[0]
+                    n_cam = cam_emb.shape[0]
                     if t_range > 1e-6:
                         norm_t = (video_t - t_min) / t_range
                     else:
                         norm_t = torch.zeros(n_video, device=q.device)
                     cam_idx = (norm_t * (n_cam - 1)).round().long().clamp(0, n_cam - 1)
 
-                    # 构造 32x32 块对角旋转矩阵: w2c[4,4] 重复8次
-                    # E_i = diag(w2c_i, w2c_i, ..., w2c_i)  (8 blocks of 4x4)
-                    w2c_dev = cam_w2c.to(device=q.device, dtype=torch.float32)  # [N,4,4]
-                    # 构造块对角矩阵 (下方循环)
-                    # 正确: 构造 [N, 32, 32] 块对角矩阵
-                    E_list = []
-                    for i in range(n_cam):
-                        Ei = torch.zeros(32, 32, device=q.device, dtype=torch.float32)
-                        for blk in range(8):
-                            Ei[blk*4:(blk+1)*4, blk*4:(blk+1)*4] = w2c_dev[i]
-                        E_list.append(Ei)
-                    E_all = torch.stack(E_list, dim=0)  # [N, 32, 32]
-                    E_T = E_all.transpose(1, 2)  # [N, 32, 32]
-                    E_inv = torch.linalg.inv(E_all)  # [N, 32, 32]
+                    # cam_emb: [N_cam, num_heads, 32] -> [n_video, heads, 32]
+                    cam_emb_dev = cam_emb.to(device=q.device, dtype=torch.float32)
+                    cam_q = cam_emb_dev[cam_idx]  # [n_video, num_heads, 32]
 
-                    # 对 q 的相机维度施加 E_i^T
-                    q_cam = q[video_a:video_b, :, cam_dim_start:cam_dim_end].float()  # [n_video, heads, 32]
-                    q_cam = torch.einsum("nij,nhj->nhi", E_T[cam_idx], q_cam)  # [n_video, heads, 32]
-                    q[video_a:video_b, :, cam_dim_start:cam_dim_end] = q_cam.to(q.dtype)
+                    # 对齐到实际 head 数 (cam_emb 的 num_heads 可能与模型不同)
+                    actual_heads = q.shape[1]
+                    if cam_q.shape[1] != actual_heads:
+                        # 广播或截断到实际 head 数
+                        if cam_q.shape[1] < actual_heads:
+                            # 重复填充
+                            repeats = (actual_heads + cam_q.shape[1] - 1) // cam_q.shape[1]
+                            cam_q = cam_q.repeat(1, repeats, 1)[:, :actual_heads, :]
+                        else:
+                            cam_q = cam_q[:, :actual_heads, :]
 
-                    # 对 k 的相机维度施加 E_j^{-1}
-                    k_cam = k[video_a:video_b, :, cam_dim_start:cam_dim_end].float()
-                    k_cam = torch.einsum("nij,nhj->nhi", E_inv[cam_idx], k_cam)
-                    k[video_a:video_b, :, cam_dim_start:cam_dim_end] = k_cam.to(k.dtype)
-
-                    # 对 v 的相机维度施加 E_j^{-1}
-                    v_cam = v[video_a:video_b, :, cam_dim_start:cam_dim_end].float()
-                    v_cam = torch.einsum("nij,nhj->nhi", E_inv[cam_idx], v_cam)
-                    v[video_a:video_b, :, cam_dim_start:cam_dim_end] = v_cam.to(v.dtype)
-
-                    _E_out = E_all[cam_idx]  # attention 输出逆变换用
+                    # 加法注入: q, k, v 的相机维度加上相机嵌入
+                    q[video_a:video_b, :, cam_dim_start:cam_dim_end] = (
+                        q[video_a:video_b, :, cam_dim_start:cam_dim_end].float() + cam_q
+                    ).to(q.dtype)
+                    k[video_a:video_b, :, cam_dim_start:cam_dim_end] = (
+                        k[video_a:video_b, :, cam_dim_start:cam_dim_end].float() + cam_q
+                    ).to(k.dtype)
+                    v[video_a:video_b, :, cam_dim_start:cam_dim_end] = (
+                        v[video_a:video_b, :, cam_dim_start:cam_dim_end].float() + cam_q
+                    ).to(v.dtype)
 
         # === 继续原始 attention ===
         from comfy.ldm.modules.attention import AttentionTensorContainer, optimized_attention
@@ -533,7 +523,7 @@ class BSAI_SolarWM_H3_ApplyCamera:
         config = to.get("solarwm_prope_config", {})
         dim_start = config.get("dim_start", 96)
         dim_end = config.get("dim_end", 128)
-        num_heads = config.get("num_heads", 40)
+        num_heads = config.get("num_heads", 56)
 
         cam_per_head = dim_end - dim_start
 
