@@ -217,38 +217,38 @@ class BSAI_SolarWM_H3_CameraTrajectory:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "总帧数": ("INT", {
+                "总帧数_num_frames": ("INT", {
                     "default": 124, "min": 5, "max": 960, "step": 1,
                     "tooltip": "像素帧数 (24fps), H3 自动对齐到 17k+5 网格"
                 }),
-                "相机模式": (["orbit", "dolly", "pan", "tilt", "static"],
+                "相机模式_mode": (["orbit", "dolly", "pan", "tilt", "static"],
                          {"default": "orbit",
                           "tooltip": "orbit=环绕主体, dolly=推拉, pan=水平摇, tilt=垂直摇, static=静止"}),
-                "环绕角度": ("FLOAT", {
+                "环绕角度_orbit_angle": ("FLOAT", {
                     "default": 360.0, "min": -720.0, "max": 720.0, "step": 1.0,
                     "tooltip": "环绕总角度 (度), 360=一整圈"
                 }),
-                "环绕半径": ("FLOAT", {
+                "环绕半径_orbit_radius": ("FLOAT", {
                     "default": 5.0, "min": 0.5, "max": 50.0, "step": 0.1,
                     "tooltip": "机位距离/环绕半径 (世界单位)"
                 }),
-                "相机高度": ("FLOAT", {
+                "相机高度_orbit_height": ("FLOAT", {
                     "default": 1.5, "min": 0.0, "max": 20.0, "step": 0.1,
                     "tooltip": "相机高度 (世界单位)"
                 }),
-                "起始角度": ("FLOAT", {
+                "起始角度_start_angle": ("FLOAT", {
                     "default": 0.0, "min": -360.0, "max": 360.0, "step": 1.0,
                     "tooltip": "起始角度 (度)"
                 }),
-                "推拉速度": ("FLOAT", {
+                "推拉速度_dolly_speed": ("FLOAT", {
                     "default": 0.0, "min": -2.0, "max": 2.0, "step": 0.01,
                     "tooltip": "每帧推拉距离 (正=远离, 负=靠近/推近)"
                 }),
-                "摇摄速度": ("FLOAT", {
+                "摇摄速度_pan_speed": ("FLOAT", {
                     "default": 0.0, "min": -5.0, "max": 5.0, "step": 0.1,
                     "tooltip": "每帧水平摇镜头角度 (度)"
                 }),
-                "俯仰速度": ("FLOAT", {
+                "俯仰速度_tilt_speed": ("FLOAT", {
                     "default": 0.0, "min": -5.0, "max": 5.0, "step": 0.1,
                     "tooltip": "每帧垂直摇镜头角度 (度)"
                 }),
@@ -411,26 +411,26 @@ class BSAI_SolarWM_H3_Loader:
         _loras = _get_loras()
         return {
             "required": {
-                "扩散模型": (_get_diffusion_models(),),
-                "精度": (["int8", "default", "fp8_e4m3fn"], {"default": "int8"}),
+                "扩散模型_model_name": (_get_diffusion_models(),),
+                "精度_precision": (["int8", "default", "fp8_e4m3fn"], {"default": "int8"}),
                 "SolarWMLoRA": (
                     (_loras if _loras else ["SolarWM-H3-stage2.pt"]),
                     {"default": "SolarWM-H3-stage2.pt",
                      "tooltip": "SolarWM Stage2 SGF LoRA (rank 384, ~2B params)"}
                 ),
-                "LoRA强度": ("FLOAT", {
+                "LoRA强度_solar_lora_strength": ("FLOAT", {
                     "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
                     "tooltip": "SolarWM LoRA 强度"
                 }),
-                "ProPE起始": ("INT", {
+                "ProPE起始_dim_start": ("INT", {
                     "default": 96, "min": 0, "max": 128, "step": 1,
                     "tooltip": "相机嵌入在 head_dim 中的起始维度 (SolarWM 默认 96)"
                 }),
-                "ProPE结束": ("INT", {
+                "ProPE结束_dim_end": ("INT", {
                     "default": 128, "min": 1, "max": 128, "step": 1,
                     "tooltip": "相机嵌入在 head_dim 中的结束维度 (SolarWM 默认 128)"
                 }),
-                "Attention头数": ("INT", {
+                "Attention头数_num_heads": ("INT", {
                     "default": 40, "min": 8, "max": 80, "step": 1,
                     "tooltip": "H3 Attention head 数 (33B=40, 5120/128)"
                 }),
@@ -450,7 +450,7 @@ class BSAI_SolarWM_H3_Loader:
         # 安装相机补丁 (一次性)
         _install_solarwm_attention_patch()
 
-        model_path = folder_paths.get_full_path("diffusion_models", 扩散模型) if folder_paths else model_name
+        model_path = folder_paths.get_full_path("diffusion_models", 扩散模型_model_name) if folder_paths else model_name
         model = load_diffusion_model(model_path)
 
         # 设置 shift (与 Sol-H3 一致)
@@ -514,7 +514,7 @@ class BSAI_SolarWM_H3_ApplyCamera:
             "required": {
                 "model": ("MODEL",),
                 "camera_poses": ("CAMERA_POSE",),
-                "相机种子": ("INT", {
+                "相机种子_camera_seed": ("INT", {
                     "default": 42, "min": 0, "max": 9999,
                     "tooltip": "ProPE 投影矩阵种子 (改变相机嵌入分布)"
                 }),
@@ -527,7 +527,7 @@ class BSAI_SolarWM_H3_ApplyCamera:
     CATEGORY = "BSAI/SolarWM-H3"
     DESCRIPTION = "将相机 c2w 轨迹编码为 fused_prope 嵌入并注入 H3 Attention"
 
-    def apply(self, model, camera_poses, 相机种子):
+    def apply(self, model, camera_poses, 相机种子_camera_seed):
         # 从 model 获取相机配置
         to = model.model_options.get("transformer_options", {})
         config = to.get("solarwm_prope_config", {})
@@ -542,7 +542,7 @@ class BSAI_SolarWM_H3_ApplyCamera:
             camera_poses,
             camera_prope_dim=cam_per_head,
             num_heads=num_heads,
-            seed=相机种子,
+            seed=相机种子_camera_seed,
         )
 
         print(f"[BSAI-SolarWM-H3] 相机轨迹已注入: {camera_poses.shape[0]}帧, "
