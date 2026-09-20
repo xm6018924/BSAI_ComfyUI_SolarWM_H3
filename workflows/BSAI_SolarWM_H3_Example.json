@@ -538,11 +538,11 @@
       "type": "Note",
       "pos": [
         -2198.7147589871793,
-        4678.101075080233
+        4738.101075080233
       ],
       "size": [
-        400,
-        200
+        420,
+        220
       ],
       "flags": {},
       "order": 0,
@@ -551,21 +551,22 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "BSAI SolarWM-H3 Loader / 模型加载器\n────────────────────────\nbase_model: H3 diffusion model / H3 扩散模型\nturbo_lora: 4-step distill LoRA / 4步蒸馏 LoRA\nturbo_strength: LoRA weight (default 1.0) / 蒸馏强度\nsolarwm_lora: Camera adapter LoRA / 相机适配器 LoRA\nsolarwm_strength: LoRA weight (default 1.0) / 相机 LoRA 强度"
+        "BSAI SolarWM-H3 Loader / 模型加载器\n================================\nbase_model: H3 diffusion model / H3扩散模型\nturbo_lora: 4-step distill LoRA / 4步蒸馏LoRA\nturbo_strength: LoRA强度 (default 1.0)\nsolarwm_lora: Camera adapter LoRA / 相机LoRA\nsolarwm_strength: LoRA强度 (default 1.0)\nOutput: model -> Generate"
       ],
       "color": "#432",
-      "bgcolor": "#653"
+      "bgcolor": "#653",
+      "resizable": true
     },
     {
       "id": 159,
       "type": "Note",
       "pos": [
         -840.3359238899528,
-        4768.247620276139
+        4818.247620276139
       ],
       "size": [
         450,
-        350
+        400
       ],
       "flags": {},
       "order": 0,
@@ -574,10 +575,11 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "BSAI SolarWM-H3 Generate / 一键生成\n────────────────────────\n[Camera / 相机参数]\norbit_turns: Orbit turns, neg=reverse / 环绕圈数(负=反向)\nradius: Start distance / 起始距离\nradius_end: End distance (dolly) / 结束距离(推拉)\nheight: Camera height / 相机高度\nheight_end: End height (crane) / 结束高度(升降)\nstart_angle: 0=front 0.25=side / 起始角度\npan_speed: Horizontal pan / 水平摇摄\ntilt_speed: Vertical tilt (rad) / 俯仰弧度\nlook_at_y: Look-at Y / 注视点高度\n────────────────────────\n[Sampling / 采样]\nseed: Random seed / 随机种子\nsteps: 4 for distill / 去噪步数\nMouse wheel = adjust / 滚轮调节"
+        "BSAI SolarWM-H3 Generate / 一键生成\n================================\n[Camera / 相机参数]\norbit_turns: 环绕圈数 (负=反向) / Orbit turns\nradius: 起始距离 / Start distance\nradius_end: 结束距离 (推拉) / End distance\nheight: 相机高度 / Camera height\nheight_end: 结束高度 (升降) / End height\nstart_angle: 起始角度 (0=前 0.25=侧) / Start angle\npan_speed: 水平摇摄 / Pan speed\ntilt_speed: 俯仰弧度 / Tilt speed\nlook_at_y: 注视点高度 / Look-at Y\n================================\n[Sampling / 采样]\nseed: 随机种子 / Random seed\nsteps: 去噪步数 (蒸馏用4) / Denoise steps\nsampler_name: 采样器 / Sampler\nscheduler: 调度器 / Scheduler\n鼠标滚轮可调节数值"
       ],
       "color": "#432",
-      "bgcolor": "#653"
+      "bgcolor": "#653",
+      "resizable": true
     }
   ],
   "links": [
