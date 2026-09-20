@@ -71,15 +71,15 @@ class BSAI_SolarWM_H3_CameraAttach:
             "required": {
                 "model": ("MODEL",),
                 "orbit_turns_环绕圈数": ("FLOAT", {
-                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
+                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01, "type": "slider",
                     "tooltip": "环绕圈数 (负=反向) | Orbit turns (negative=reverse), e.g. -0.02=slow dolly-in test",
                 }),
                 "radius_起始半径": ("FLOAT", {
-                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05, "type": "slider",
                     "tooltip": "起始相机距离 | Start camera distance",
                 }),
                 "radius_end_结束半径": ("FLOAT", {
-                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05, "type": "slider",
                     "tooltip": "结束距离 (r_end<r=推近, r_end>r=拉远) | End distance (dolly-in/out)",
                 }),
                 "latent": ("LATENT",),
@@ -154,39 +154,39 @@ class BSAI_SolarWM_H3_Generate:
                 "positive": ("CONDITIONING",),
                 "latent": ("LATENT",),
                 "orbit_turns": ("FLOAT", {
-                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
+                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01, "type": "slider",
                     "tooltip": "环绕圈数(负=反向) | Orbit turns (negative=reverse)",
                 }),
                 "radius": ("FLOAT", {
-                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05, "type": "slider",
                     "tooltip": "起始相机距离 | Start camera distance",
                 }),
                 "radius_end": ("FLOAT", {
-                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05, "type": "slider",
                     "tooltip": "结束距离(推近/拉远) | End distance (dolly-in/out)",
                 }),
                 "height": ("FLOAT", {
-                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05, "type": "slider",
                     "tooltip": "相机高度 | Camera height (Y axis)",
                 }),
                 "height_end": ("FLOAT", {
-                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05, "type": "slider",
                     "tooltip": "结束高度(上升/下降) | End height (rise/fall)",
                 }),
                 "start_angle": ("FLOAT", {
-                    "default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01,
+                    "default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01, "type": "slider",
                     "tooltip": "起始角度(0=前方,0.25=侧方) | Start angle offset",
                 }),
                 "pan_speed": ("FLOAT", {
-                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
+                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01, "type": "slider",
                     "tooltip": "水平摇摄速度 | Horizontal pan speed",
                 }),
                 "tilt_speed": ("FLOAT", {
-                    "default": 0.0, "min": -3.14, "max": 3.14, "step": 0.05,
+                    "default": 0.0, "min": -3.14, "max": 3.14, "step": 0.05, "type": "slider",
                     "tooltip": "俯仰速度(弧度) | Vertical tilt speed (rad)",
                 }),
                 "look_at_y": ("FLOAT", {
-                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05, "type": "slider",
                     "tooltip": "注视点高度 | Look-at point Y offset",
                 }),
                 "seed": ("INT", {
@@ -321,14 +321,14 @@ class BSAI_SolarWM_H3_Loader:
                     "tooltip": "4-step distill LoRA / 4步蒸馏 LoRA",
                 }),
                 "turbo_strength": ("FLOAT", {
-                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
+                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05, "type": "slider",
                     "tooltip": "Turbo LoRA strength / 蒸馏 LoRA 强度",
                 }),
                 "solarwm_lora": (sorted(lora_models), {
                     "tooltip": "SolarWM camera adapter LoRA / SolarWM 相机适配器 LoRA",
                 }),
                 "solarwm_strength": ("FLOAT", {
-                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
+                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05, "type": "slider",
                     "tooltip": "SolarWM LoRA strength / SolarWM LoRA 强度",
                 }),
             },

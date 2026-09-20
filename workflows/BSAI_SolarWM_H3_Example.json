@@ -1,22 +1,22 @@
 {
-  "id": "1d0a8d9c-b0dc-421a-ab4c-9f3c013afcd9",
+  "id": "9452f8d7-714e-4129-b7b4-b8b51ae3e5b5",
   "revision": 0,
-  "last_node_id": 155,
-  "last_link_id": 298,
+  "last_node_id": 158,
+  "last_link_id": 299,
   "nodes": [
     {
       "id": 92,
       "type": "SaveVideo",
       "pos": [
-        805.1873200566437,
-        4573.03676564606
+        131.2797439579704,
+        4576.847987851649
       ],
       "size": [
         593.609375,
         106
       ],
       "flags": {},
-      "order": 25,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
@@ -54,15 +54,15 @@
       "id": 127,
       "type": "VAELoader",
       "pos": [
-        -2187.091702738942,
-        5108.1659133043095
+        -2194.747904418616,
+        5040.861351151078
       ],
       "size": [
-        640,
-        100
+        638.1017797644101,
+        58
       ],
       "flags": {},
-      "order": 5,
+      "order": 0,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -92,21 +92,22 @@
       ],
       "widgets_values_named": {
         "vae_name": "minimax_h3_video_vae_fp16.safetensors"
-      }
+      },
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 128,
       "type": "VAELoader",
       "pos": [
-        -2194.1189934878585,
-        5262.349350699043
+        -2188.424545879019,
+        5188.581340533553
       ],
       "size": [
-        650,
-        100
+        641.6668131657607,
+        58
       ],
       "flags": {},
-      "order": 6,
+      "order": 1,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -135,14 +136,15 @@
       ],
       "widgets_values_named": {
         "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
-      }
+      },
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 129,
       "type": "VAEDecodeAudio",
       "pos": [
-        228.7915997773537,
-        4703.861192075818
+        -445.1159763213193,
+        4707.672414281406
       ],
       "size": [
         230,
@@ -151,7 +153,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 23,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -178,14 +180,15 @@
         "cnr_id": "comfy-core",
         "ver": "0.33.0",
         "Node name for S&R": "VAEDecodeAudio"
-      }
+      },
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 130,
       "type": "VAEDecode",
       "pos": [
-        228.7915997773537,
-        4563.861192075818
+        -445.1159763213193,
+        4567.672414281406
       ],
       "size": [
         230,
@@ -194,7 +197,7 @@
       "flags": {
         "collapsed": false
       },
-      "order": 22,
+      "order": 6,
       "mode": 0,
       "inputs": [
         {
@@ -221,66 +224,22 @@
         "cnr_id": "comfy-core",
         "ver": "0.33.0",
         "Node name for S&R": "VAEDecode"
-      }
-    },
-    {
-      "id": 135,
-      "type": "UNETLoader",
-      "pos": [
-        -2188.5820599092085,
-        4550.610433388323
-      ],
-      "size": [
-        640,
-        120
-      ],
-      "flags": {},
-      "order": 8,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            266
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0",
-        "Node name for S&R": "UNETLoader",
-        "models": [
-          {
-            "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-            "directory": "diffusion_models"
-          }
-        ]
       },
-      "widgets_values": [
-        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-        "default"
-      ],
-      "widgets_values_named": {
-        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
-        "weight_dtype": "default"
-      }
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 136,
       "type": "CLIPLoader",
       "pos": [
-        -2186.5687770542067,
-        4901.890805087485
+        -2190.4284448037783,
+        4829.815421361528
       ],
       "size": [
-        640,
-        150
+        655.9070855742432,
+        106
       ],
       "flags": {},
-      "order": 9,
+      "order": 2,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -313,21 +272,22 @@
         "clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
         "type": "minimax",
         "device": "default"
-      }
+      },
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 138,
       "type": "CreateVideo",
       "pos": [
-        509.47034334188606,
-        4564.628408664998
+        -164.4372327567871,
+        4568.439630870586
       ],
       "size": [
         270,
         150
       ],
       "flags": {},
-      "order": 24,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
@@ -367,124 +327,22 @@
         "bit_depth": 8,
         "color_space": "sRGB",
         "codec": "none"
-      }
-    },
-    {
-      "id": 142,
-      "type": "LoraLoaderModelOnly",
-      "pos": [
-        -2186.3070086650823,
-        4723.595063771843
-      ],
-      "size": [
-        640,
-        130
-      ],
-      "flags": {},
-      "order": 14,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 266
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            281
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0",
-        "Node name for S&R": "LoraLoaderModelOnly",
-        "models": [
-          {
-            "name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
-            "url": "https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
-            "directory": "loras"
-          }
-        ]
       },
-      "widgets_values": [
-        "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
-        1
-      ],
-      "widgets_values_named": {
-        "lora_name": "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
-        "strength_model": 1
-      }
-    },
-    {
-      "id": 152,
-      "type": "LoraLoaderModelOnly",
-      "pos": [
-        -1464.6729324356008,
-        4558.225004560448
-      ],
-      "size": [
-        552.2130464281565,
-        82
-      ],
-      "flags": {},
-      "order": 16,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 281
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            284,
-            293
-          ]
-        }
-      ],
-      "properties": {
-        "cnr_id": "comfy-core",
-        "ver": "0.33.0",
-        "Node name for S&R": "LoraLoaderModelOnly",
-        "models": [
-          {
-            "name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
-            "url": "https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
-            "directory": "loras"
-          }
-        ]
-      },
-      "widgets_values": [
-        "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
-        1
-      ],
-      "widgets_values_named": {
-        "lora_name": "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
-        "strength_model": 1
-      }
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 139,
       "type": "MiniMaxH3ImageToVideo",
       "pos": [
-        -1454.868139235202,
-        4689.432723510437
+        -1461.7586786903933,
+        4561.574935841889
       ],
       "size": [
-        540.9728269798013,
-        569.0559399864305
+        547.8633664349925,
+        693.8512656748935
       ],
       "flags": {},
-      "order": 17,
+      "order": 4,
       "mode": 0,
       "inputs": [
         {
@@ -501,37 +359,13 @@
           "name": "first_frame",
           "shape": 7,
           "type": "IMAGE",
-          "link": 287
+          "link": null
         },
         {
           "name": "last_frame",
           "shape": 7,
           "type": "IMAGE",
           "link": null
-        },
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 261
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 262
-        },
-        {
-          "name": "length",
-          "type": "INT",
-          "widget": {
-            "name": "length"
-          },
-          "link": 260
         }
       ],
       "outputs": [
@@ -539,7 +373,6 @@
           "name": "positive",
           "type": "CONDITIONING",
           "links": [
-            253,
             295
           ]
         },
@@ -547,7 +380,6 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            252,
             296
           ]
         }
@@ -568,37 +400,38 @@
         "width": 1344,
         "height": 768,
         "length": 73
-      }
+      },
+      "bgcolor": "rgba(0,0,0,0)"
     },
     {
       "id": 155,
       "type": "BSAI_SolarWM_H3_Generate",
       "pos": [
-        -848.5892589262816,
-        4560.752216308559
+        -840.3359238899528,
+        4568.247620276139
       ],
       "size": [
-        275.5929497871351,
-        146
+        300.85118824135725,
+        410
       ],
       "flags": {},
-      "order": 19,
+      "order": 5,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 293
-        },
-        {
-          "name": "latent",
-          "type": "LATENT",
-          "link": 296
+          "link": 299
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
           "link": 295
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "link": 296
         }
       ],
       "outputs": [
@@ -612,19 +445,22 @@
         }
       ],
       "properties": {
+        "aux_id": "xm6018924/BSAI_ComfyUI_SolarWM_H3",
+        "ver": "d579dcc6bb0d0308f7c4a51786a4a5a456f9f5b7",
         "Node name for S&R": "BSAI_SolarWM_H3_Generate"
       },
       "widgets_values": [
         -0.02,
         3,
         2.8,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
-        0.0,
         42,
+        4,
+        0,
+        0,
+        4,
+        0,
+        42,
+        "randomize",
         4,
         "res_multistep",
         "simple"
@@ -633,18 +469,115 @@
         "orbit_turns": -0.02,
         "radius": 3,
         "radius_end": 2.8,
-        "height": 0.0,
-        "height_end": 0.0,
-        "start_angle": 0.0,
-        "pan_speed": 0.0,
-        "tilt_speed": 0.0,
-        "look_at_y": 0.0,
+        "height": 42,
+        "height_end": 4,
+        "start_angle": 0,
+        "pan_speed": 0,
+        "tilt_speed": 4,
+        "look_at_y": 0,
         "seed": 42,
+        "control_after_generate": "randomize",
         "steps": 4,
         "sampler_name": "res_multistep",
         "scheduler": "simple"
       },
-      "title": "BSAI SolarWM-H3 Generate (一键生成)"
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 157,
+      "type": "BSAI_SolarWM_H3_Loader",
+      "pos": [
+        -2198.7147589871793,
+        4558.101075080233
+      ],
+      "size": [
+        670.1168081616767,
+        174
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            299
+          ]
+        },
+        {
+          "name": "solar_info_信息",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "aux_id": "xm6018924/BSAI_ComfyUI_SolarWM_H3",
+        "ver": "d579dcc6bb0d0308f7c4a51786a4a5a456f9f5b7",
+        "Node name for S&R": "BSAI_SolarWM_H3_Loader"
+      },
+      "widgets_values": [
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+        1,
+        "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "base_model": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "turbo_lora": "minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+        "turbo_strength": 1,
+        "solarwm_lora": "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        "solarwm_strength": 1
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 158,
+      "type": "Note",
+      "pos": [
+        -2198.7147589871793,
+        4678.101075080233
+      ],
+      "size": [
+        400,
+        200
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "BSAI SolarWM-H3 Loader / 模型加载器\n────────────────────────\nbase_model: H3 diffusion model / H3 扩散模型\nturbo_lora: 4-step distill LoRA / 4步蒸馏 LoRA\nturbo_strength: LoRA weight (default 1.0) / 蒸馏强度\nsolarwm_lora: Camera adapter LoRA / 相机适配器 LoRA\nsolarwm_strength: LoRA weight (default 1.0) / 相机 LoRA 强度"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 159,
+      "type": "Note",
+      "pos": [
+        -840.3359238899528,
+        4768.247620276139
+      ],
+      "size": [
+        450,
+        350
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "BSAI SolarWM-H3 Generate / 一键生成\n────────────────────────\n[Camera / 相机参数]\norbit_turns: Orbit turns, neg=reverse / 环绕圈数(负=反向)\nradius: Start distance / 起始距离\nradius_end: End distance (dolly) / 结束距离(推拉)\nheight: Camera height / 相机高度\nheight_end: End height (crane) / 结束高度(升降)\nstart_angle: 0=front 0.25=side / 起始角度\npan_speed: Horizontal pan / 水平摇摄\ntilt_speed: Vertical tilt (rad) / 俯仰弧度\nlook_at_y: Look-at Y / 注视点高度\n────────────────────────\n[Sampling / 采样]\nseed: Random seed / 随机种子\nsteps: 4 for distill / 去噪步数\nMouse wheel = adjust / 滚轮调节"
+      ],
+      "color": "#432",
+      "bgcolor": "#653"
     }
   ],
   "links": [
@@ -697,54 +630,6 @@
       "VAE"
     ],
     [
-      266,
-      135,
-      0,
-      142,
-      0,
-      "MODEL"
-    ],
-    [
-      281,
-      142,
-      0,
-      152,
-      0,
-      "MODEL"
-    ],
-    [
-      293,
-      152,
-      0,
-      155,
-      0,
-      "MODEL"
-    ],
-    [
-      295,
-      139,
-      0,
-      155,
-      2,
-      "CONDITIONING"
-    ],
-    [
-      296,
-      139,
-      1,
-      155,
-      1,
-      "LATENT"
-    ],
-    [
-      258,
-      138,
-      0,
-      92,
-      0,
-      "VIDEO"
-    ],
-    [
       297,
       155,
       0,
@@ -759,41 +644,49 @@
       129,
       0,
       "LATENT"
+    ],
+    [
+      296,
+      139,
+      1,
+      155,
+      2,
+      "LATENT"
+    ],
+    [
+      295,
+      139,
+      0,
+      155,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      299,
+      157,
+      0,
+      155,
+      0,
+      "MODEL"
+    ],
+    [
+      258,
+      138,
+      0,
+      92,
+      0,
+      "VIDEO"
     ]
   ],
   "groups": [
-    {
-      "id": 5,
-      "title": "Use Image Size",
-      "bounding": [
-        -2794.862886656892,
-        5480.805539493661,
-        589.4938996667402,
-        258.38598608304164
-      ],
-      "color": "#3f789e",
-      "flags": {}
-    },
     {
       "id": 1,
       "title": "Models",
       "bounding": [
         -2215,
         4480,
-        700,
-        980
-      ],
-      "color": "#3f789e",
-      "flags": {}
-    },
-    {
-      "id": 2,
-      "title": "Sampling",
-      "bounding": [
-        -524.2912244086414,
-        4477.47346886643,
-        700,
-        800
+        701.8982202355896,
+        803.4655180901418
       ],
       "color": "#3f789e",
       "flags": {}
@@ -814,8 +707,8 @@
       "id": 4,
       "title": "Decoding and create video",
       "bounding": [
-        188.45222799508718,
-        4478.048687119639,
+        -485.4553481035857,
+        4481.859909325228,
         1233.5661827868462,
         805.604688231303
       ],
@@ -828,8 +721,8 @@
       "bounding": [
         -870.4824600664705,
         4478.588571182884,
-        334.1319964041015,
-        795.5162494149581
+        362.155437560617,
+        806.7256258775642
       ],
       "color": "#3f789e",
       "flags": {}
@@ -838,17 +731,27 @@
   "config": {},
   "extra": {
     "ds": {
-      "scale": 0.5539302967747691,
+      "scale": 1.306138664255018,
       "offset": [
-        4150.797623815911,
-        -3905.345126592067
+        2467.995677159113,
+        -4332.62755195354
       ]
     },
     "frontendVersion": "1.53.6",
     "VHS_KeepIntermediate": true,
     "VHS_MetadataImage": true,
     "VHS_latentpreview": false,
-    "VHS_latentpreviewrate": 0
+    "VHS_latentpreviewrate": 0,
+    "qgn_navigation_groups": [],
+    "qgn_locked": false
   },
-  "version": 0.4
+  "extensions": {
+    "seed_widgets": {
+      "155": 3
+    }
+  },
+  "version": 0.4,
+  "seed_widgets": {
+    "155": 9
+  }
 }
