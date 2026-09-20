@@ -304,12 +304,79 @@ class BSAI_SolarWM_H3_Generate:
         latent_out["samples"] = samples
         return (latent_out,)
 
+class BSAI_SolarWM_H3_Loader:
+    """Combined loader: UNETLoader + turbo LoRA + SolarWM LoRA in one node."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        import folder_paths
+        unet_models = folder_paths.get_filename_list("diffusion_models")
+        lora_models = folder_paths.get_filename_list("loras")
+        return {
+            "required": {
+                "base_model": (sorted(unet_models), {
+                    "tooltip": "H3 diffusion model / H3 扩散模型",
+                }),
+                "turbo_lora": (sorted(lora_models), {
+                    "tooltip": "4-step distill LoRA / 4步蒸馏 LoRA",
+                }),
+                "turbo_strength": ("FLOAT", {
+                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
+                    "tooltip": "Turbo LoRA strength / 蒸馏 LoRA 强度",
+                }),
+                "solarwm_lora": (sorted(lora_models), {
+                    "tooltip": "SolarWM camera adapter LoRA / SolarWM 相机适配器 LoRA",
+                }),
+                "solarwm_strength": ("FLOAT", {
+                    "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
+                    "tooltip": "SolarWM LoRA strength / SolarWM LoRA 强度",
+                }),
+            },
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("model",)
+    FUNCTION = "load"
+    CATEGORY = "BSAI/SolarWM-H3"
+
+    def load(self, base_model, turbo_lora, turbo_strength,
+             solarwm_lora, solarwm_strength):
+        import comfy.sd
+        import folder_paths
+
+        model_options = {}
+        model = comfy.sd.load_diffusion_model(
+            folder_paths.get_full_path("diffusion_models", base_model),
+            model_options=model_options,
+        )
+
+        turbo_path = folder_paths.get_full_path("loras", turbo_lora)
+        if turbo_path and turbo_strength > 0:
+            model_lora = comfy.utils.load_torch_file(turbo_path, safe_load=True)
+            model = model.clone()
+            model.add_patches(model_lora, strength_patch=turbo_strength,
+                              strength_model=turbo_strength)
+            del model_lora
+
+        solarwm_path = folder_paths.get_full_path("loras", solarwm_lora)
+        if solarwm_path and solarwm_strength > 0:
+            model_lora = comfy.utils.load_torch_file(solarwm_path, safe_load=True)
+            model = model.clone()
+            model.add_patches(model_lora, strength_patch=solarwm_strength,
+                              strength_model=solarwm_strength)
+            del model_lora
+
+        return (model,)
+
+
 NODE_CLASS_MAPPINGS = {
+    "BSAI_SolarWM_H3_Loader": BSAI_SolarWM_H3_Loader,
     "BSAI_SolarWM_H3_CameraAttach": BSAI_SolarWM_H3_CameraAttach,
     "BSAI_SolarWM_H3_Generate": BSAI_SolarWM_H3_Generate,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "BSAI_SolarWM_H3_Loader": "BSAI SolarWM-H3 Loader (模型加载)",
     "BSAI_SolarWM_H3_CameraAttach": "BSAI SolarWM-H3 Camera Attach (相机轨迹)",
     "BSAI_SolarWM_H3_Generate": "BSAI SolarWM-H3 Generate (一键生成)",
 }
