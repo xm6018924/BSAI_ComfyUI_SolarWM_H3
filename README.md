@@ -1,4 +1,4 @@
-﻿# BSAI SolarWM-H3 / BSAI SolarWM-H3
+# BSAI SolarWM-H3 / MiniMax H3 可控相机轨迹视频生成插件
 
 **MiniMax H3 Camera-Trajectory Video Generation via SolarWM fused-PRoPE injection**
 
