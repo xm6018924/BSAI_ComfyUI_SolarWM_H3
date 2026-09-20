@@ -69,7 +69,7 @@ class BSAI_SolarWM_H3_CameraAttach:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "model_模型": ("MODEL",),
+                "model": ("MODEL",),
                 "orbit_turns_环绕圈数": ("FLOAT", {
                     "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
                     "tooltip": "环绕圈数 (负=反向) | Orbit turns (negative=reverse), e.g. -0.02=slow dolly-in test",
@@ -82,20 +82,20 @@ class BSAI_SolarWM_H3_CameraAttach:
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
                     "tooltip": "结束距离 (r_end<r=推近, r_end>r=拉远) | End distance (dolly-in/out)",
                 }),
-                "latent_视频潜空间": ("LATENT",),
-                "positive_正向条件": ("CONDITIONING",),
+                "latent": ("LATENT",),
+                "positive": ("CONDITIONING",),
             },
         }
 
     RETURN_TYPES = ("MODEL",)
-    RETURN_NAMES = ("model_模型",)
+    RETURN_NAMES = ("model",)
     FUNCTION = "attach"
     CATEGORY = "BSAI/SolarWM-H3"
     DESCRIPTION = "BSAI SolarWM-H3 相机轨迹注入 (fused-PRoPE) | Camera trajectory inject"
 
-    def attach(self, model_模型, orbit_turns_环绕圈数, radius_起始半径,
-               radius_end_结束半径, latent_视频潜空间, positive_正向条件):
-        video = _latent_video_dims(latent_视频潜空间)
+    def attach(self, model, orbit_turns_环绕圈数, radius_起始半径,
+               radius_end_结束半径, latent, positive):
+        video = _latent_video_dims(latent)
         if video is None:
             raise ValueError(
                 "BSAI SolarWM-H3: 需要 H3 AV LATENT (samples [B,24,T,H,W])"
@@ -103,7 +103,7 @@ class BSAI_SolarWM_H3_CameraAttach:
         latent_t, latent_h, latent_w = video
         traj_frames = latent_pixel_count(latent_t)
 
-        text_len = _conditioning_text_len(positive_正向条件)
+        text_len = _conditioning_text_len(positive)
         if text_len is None:
             raise ValueError(
                 "BSAI SolarWM-H3: 需要 positive CONDITIONING 来获取文本长度"
@@ -139,16 +139,179 @@ class BSAI_SolarWM_H3_CameraAttach:
             f"traj={row_plan.trajectory_frames}"
         )
 
-        patcher = attach_solarwm(model_模型, prope=prope, row_plan=row_plan)
+        patcher = attach_solarwm(model, prope=prope, row_plan=row_plan)
         return (patcher,)
 
 
+class BSAI_SolarWM_H3_Generate:
+    """BSAI SolarWM-H3 One-click Generate (PRoPE camera + 4-step distill sample)."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "model": ("MODEL",),
+                "positive": ("CONDITIONING",),
+                "latent": ("LATENT",),
+                "orbit_turns": ("FLOAT", {
+                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
+                    "tooltip": "环绕圈数(负=反向) | Orbit turns (negative=reverse)",
+                }),
+                "radius": ("FLOAT", {
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "tooltip": "起始相机距离 | Start camera distance",
+                }),
+                "radius_end": ("FLOAT", {
+                    "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
+                    "tooltip": "结束距离(推近/拉远) | End distance (dolly-in/out)",
+                }),
+                "height": ("FLOAT", {
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "tooltip": "相机高度 | Camera height (Y axis)",
+                }),
+                "height_end": ("FLOAT", {
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "tooltip": "结束高度(上升/下降) | End height (rise/fall)",
+                }),
+                "start_angle": ("FLOAT", {
+                    "default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01,
+                    "tooltip": "起始角度(0=前方,0.25=侧方) | Start angle offset",
+                }),
+                "pan_speed": ("FLOAT", {
+                    "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
+                    "tooltip": "水平摇摄速度 | Horizontal pan speed",
+                }),
+                "tilt_speed": ("FLOAT", {
+                    "default": 0.0, "min": -3.14, "max": 3.14, "step": 0.05,
+                    "tooltip": "俯仰速度(弧度) | Vertical tilt speed (rad)",
+                }),
+                "look_at_y": ("FLOAT", {
+                    "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
+                    "tooltip": "注视点高度 | Look-at point Y offset",
+                }),
+                "seed": ("INT", {
+                    "default": 42, "min": 0, "max": 0xffffffffffffffff,
+                    "control_after_generate": True,
+                    "tooltip": "随机种子 | Random seed",
+                }),
+                "steps": ("INT", {
+                    "default": 4, "min": 1, "max": 100, "step": 1,
+                    "tooltip": "去噪步数(4步蒸馏用4) | Denoise steps",
+                }),
+                "sampler_name": (["res_multistep", "euler", "euler_cfg_pp",
+                                    "dpm_2", "dpm_2_ancestral", "heun", "heunpp2",
+                                    "euler_ancestral", "euler_ancestral_cfg_pp"], {
+                    "default": "res_multistep",
+                    "tooltip": "采样器 | Sampler",
+                }),
+                "scheduler": (["simple", "sgm_uniform", "karras",
+                                "exponential", "normal", "ddim_uniform"], {
+                    "default": "simple",
+                    "tooltip": "调度器 | Scheduler",
+                }),
+            },
+        }
+
+    RETURN_TYPES = ("LATENT",)
+    RETURN_NAMES = ("latent",)
+    FUNCTION = "generate"
+    CATEGORY = "BSAI/SolarWM-H3"
+
+    def generate(self, model, positive, latent,
+                 orbit_turns, radius, radius_end, height, height_end,
+                 start_angle, pan_speed, tilt_speed, look_at_y,
+                 seed, steps, sampler_name, scheduler):
+        import comfy.samplers
+        import comfy.sample
+        import latent_preview
+        from comfy_extras.nodes_custom_sampler import Guider_Basic
+
+        video = _latent_video_dims(latent)
+        if video is None:
+            raise ValueError("BSAI SolarWM-H3: need H3 AV LATENT")
+        latent_t, latent_h, latent_w = video
+        traj_frames = latent_pixel_count(latent_t)
+
+        text_len = _conditioning_text_len(positive)
+        if text_len is None:
+            raise ValueError("BSAI SolarWM-H3: need positive CONDITIONING")
+
+        from .payload import build_enhanced_camera
+        c2w = build_enhanced_camera(
+            traj_frames,
+            orbit_turns=float(orbit_turns),
+            radius=float(radius),
+            radius_end=float(radius_end),
+            height=float(height),
+            height_end=float(height_end),
+            start_angle=float(start_angle),
+            pan_speed=float(pan_speed),
+            tilt_speed=float(tilt_speed),
+            look_at_y=float(look_at_y),
+        )
+        prope = SolarWMProPE(
+            camera=SolarWMCamera(c2w=c2w)
+        )
+        row_plan = build_row_plan(
+            latent_t=latent_t, latent_h=latent_h, latent_w=latent_w,
+            trajectory_frames=prope.camera.frames, text_len=text_len,
+        )
+        if row_plan.warning:
+            print(f"[BSAI-SolarWM-H3] [row plan] {row_plan.warning}")
+        print(f"[BSAI-SolarWM-H3] row plan: t={row_plan.latent_t} "
+              f"canvas={row_plan.latent_h}x{row_plan.latent_w} "
+              f"text_len={row_plan.text_len} traj={row_plan.trajectory_frames}")
+
+        model_prope = attach_solarwm(model, prope=prope, row_plan=row_plan)
+
+        model_sampling = model.get_model_object("model_sampling")
+        sigmas = comfy.samplers.calculate_sigmas(
+            model_sampling, scheduler, steps
+        ).cpu()
+
+        guider = Guider_Basic(model_prope)
+        guider.set_conds(positive)
+        sampler = comfy.samplers.sampler_object(sampler_name)
+
+        latent_out = latent.copy()
+        latent_image = latent_out["samples"]
+        latent_image = comfy.sample.fix_empty_latent_channels(
+            model_prope, latent_image,
+            latent_out.get("downscale_ratio_spacial", None),
+            latent_out.get("downscale_ratio_temporal", None),
+        )
+        latent_out["samples"] = latent_image
+
+        noise_mask = latent_out.get("noise_mask", None)
+        x0_output = {}
+        callback = latent_preview.prepare_callback(
+            model_prope, sigmas.shape[-1] - 1, x0_output
+        )
+        disable_pbar = not comfy.utils.PROGRESS_BAR_ENABLED
+
+        batch_inds = latent_out.get("batch_index", None)
+        noise = comfy.sample.prepare_noise(latent_image, seed, batch_inds)
+
+        samples = guider.sample(
+            noise, latent_image, sampler, sigmas,
+            denoise_mask=noise_mask, callback=callback,
+            disable_pbar=disable_pbar, seed=seed,
+        )
+        samples = samples.to(comfy.model_management.intermediate_device())
+
+        latent_out.pop("downscale_ratio_spacial", None)
+        latent_out.pop("downscale_ratio_temporal", None)
+        latent_out["samples"] = samples
+        return (latent_out,)
+
 NODE_CLASS_MAPPINGS = {
     "BSAI_SolarWM_H3_CameraAttach": BSAI_SolarWM_H3_CameraAttach,
+    "BSAI_SolarWM_H3_Generate": BSAI_SolarWM_H3_Generate,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "BSAI_SolarWM_H3_CameraAttach": "BSAI SolarWM-H3 Camera Attach (相机轨迹)",
+    "BSAI_SolarWM_H3_Generate": "BSAI SolarWM-H3 Generate (一键生成)",
 }
 
 

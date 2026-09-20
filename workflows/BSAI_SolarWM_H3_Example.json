@@ -1,0 +1,854 @@
+{
+  "id": "1d0a8d9c-b0dc-421a-ab4c-9f3c013afcd9",
+  "revision": 0,
+  "last_node_id": 155,
+  "last_link_id": 298,
+  "nodes": [
+    {
+      "id": 92,
+      "type": "SaveVideo",
+      "pos": [
+        805.1873200566437,
+        4573.03676564606
+      ],
+      "size": [
+        593.609375,
+        106
+      ],
+      "flags": {},
+      "order": 25,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 258
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "video/MiniMax_H3",
+        "auto",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "video/MiniMax_H3",
+        "format": "auto",
+        "format.codec": "auto",
+        "codec": "auto"
+      }
+    },
+    {
+      "id": 127,
+      "type": "VAELoader",
+      "pos": [
+        -2187.091702738942,
+        5108.1659133043095
+      ],
+      "size": [
+        640,
+        100
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            247,
+            257
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "minimax_h3_video_vae_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      }
+    },
+    {
+      "id": 128,
+      "type": "VAELoader",
+      "pos": [
+        -2194.1189934878585,
+        5262.349350699043
+      ],
+      "size": [
+        650,
+        100
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            246
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAELoader",
+        "models": [
+          {
+            "name": "minimax_h3_audio_vae_fp32.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      }
+    },
+    {
+      "id": 129,
+      "type": "VAEDecodeAudio",
+      "pos": [
+        228.7915997773537,
+        4703.861192075818
+      ],
+      "size": [
+        230,
+        80
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 298
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 246
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            255
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAEDecodeAudio"
+      }
+    },
+    {
+      "id": 130,
+      "type": "VAEDecode",
+      "pos": [
+        228.7915997773537,
+        4563.861192075818
+      ],
+      "size": [
+        230,
+        80
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 297
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 247
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            254
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 135,
+      "type": "UNETLoader",
+      "pos": [
+        -2188.5820599092085,
+        4550.610433388323
+      ],
+      "size": [
+        640,
+        120
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            266
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "UNETLoader",
+        "models": [
+          {
+            "name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+            "directory": "diffusion_models"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      }
+    },
+    {
+      "id": 136,
+      "type": "CLIPLoader",
+      "pos": [
+        -2186.5687770542067,
+        4901.890805087485
+      ],
+      "size": [
+        640,
+        150
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            256
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "CLIPLoader",
+        "models": [
+          {
+            "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "minimax",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "type": "minimax",
+        "device": "default"
+      }
+    },
+    {
+      "id": 138,
+      "type": "CreateVideo",
+      "pos": [
+        509.47034334188606,
+        4564.628408664998
+      ],
+      "size": [
+        270,
+        150
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 254
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 255
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            258
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24,
+        8,
+        "sRGB",
+        "none"
+      ],
+      "widgets_values_named": {
+        "fps": 24,
+        "bit_depth": 8,
+        "color_space": "sRGB",
+        "codec": "none"
+      }
+    },
+    {
+      "id": 142,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -2186.3070086650823,
+        4723.595063771843
+      ],
+      "size": [
+        640,
+        130
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 266
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            281
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_name": "minimax_h3_fl2v_turbo_4step_v1.1_768p_comfyui_bf16.safetensors",
+        "strength_model": 1
+      }
+    },
+    {
+      "id": 152,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -1464.6729324356008,
+        4558.225004560448
+      ],
+      "size": [
+        552.2130464281565,
+        82
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 281
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            284,
+            293
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "LoraLoaderModelOnly",
+        "models": [
+          {
+            "name": "minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+            "url": "https://huggingface.co/lightx2v/Minimax-h3-Turbo/resolve/main/minimax_h3_fl2v_turbo_8step_v1.0_comfyui_bf16.safetensors",
+            "directory": "loras"
+          }
+        ]
+      },
+      "widgets_values": [
+        "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "lora_name": "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        "strength_model": 1
+      }
+    },
+    {
+      "id": 139,
+      "type": "MiniMaxH3ImageToVideo",
+      "pos": [
+        -1454.868139235202,
+        4689.432723510437
+      ],
+      "size": [
+        540.9728269798013,
+        569.0559399864305
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 256
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 257
+        },
+        {
+          "name": "first_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 287
+        },
+        {
+          "name": "last_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 261
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 262
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 260
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            253,
+            295
+          ]
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            252,
+            296
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "Node name for S&R": "MiniMaxH3ImageToVideo"
+      },
+      "widgets_values": [
+        "A glossy black sports car is parked completely still on a vast dry lake bed.\n\nThe car remains completely stationary throughout the entire shot.\nThe wheels do not rotate and the vehicle does not move.\n\nThe camera moves slowly and smoothly straight forward toward the rear of the car.\nThe camera does not orbit around the vehicle and does not move sideways.\n\nThe car remains centered and geometrically stable.\nIts body shape, taillights, wheels and proportions remain unchanged.\n\nThe mountains, horizon and dry lake surface remain spatially stable.\nNatural perspective and subtle parallax only.\n\nNo lateral camera movement.\nNo orbit.\nNo rotation around the car.\nNo scene morphing.\nNo geometry distortion.\nNo background sliding.\n\nBright midday sunlight with realistic shadows.\n\nAudio: no dialogue, no human voice, no music.\nOnly gentle desert wind and a quiet engine idle.",
+        1344,
+        768,
+        73
+      ],
+      "widgets_values_named": {
+        "prompt": "A glossy black sports car is parked completely still on a vast dry lake bed.\n\nThe car remains completely stationary throughout the entire shot.\nThe wheels do not rotate and the vehicle does not move.\n\nThe camera moves slowly and smoothly straight forward toward the rear of the car.\nThe camera does not orbit around the vehicle and does not move sideways.\n\nThe car remains centered and geometrically stable.\nIts body shape, taillights, wheels and proportions remain unchanged.\n\nThe mountains, horizon and dry lake surface remain spatially stable.\nNatural perspective and subtle parallax only.\n\nNo lateral camera movement.\nNo orbit.\nNo rotation around the car.\nNo scene morphing.\nNo geometry distortion.\nNo background sliding.\n\nBright midday sunlight with realistic shadows.\n\nAudio: no dialogue, no human voice, no music.\nOnly gentle desert wind and a quiet engine idle.",
+        "width": 1344,
+        "height": 768,
+        "length": 73
+      }
+    },
+    {
+      "id": 155,
+      "type": "BSAI_SolarWM_H3_Generate",
+      "pos": [
+        -848.5892589262816,
+        4560.752216308559
+      ],
+      "size": [
+        275.5929497871351,
+        146
+      ],
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 293
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "link": 296
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 295
+        }
+      ],
+      "outputs": [
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            297,
+            298
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BSAI_SolarWM_H3_Generate"
+      },
+      "widgets_values": [
+        -0.02,
+        3,
+        2.8,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        42,
+        4,
+        "res_multistep",
+        "simple"
+      ],
+      "widgets_values_named": {
+        "orbit_turns": -0.02,
+        "radius": 3,
+        "radius_end": 2.8,
+        "height": 0.0,
+        "height_end": 0.0,
+        "start_angle": 0.0,
+        "pan_speed": 0.0,
+        "tilt_speed": 0.0,
+        "look_at_y": 0.0,
+        "seed": 42,
+        "steps": 4,
+        "sampler_name": "res_multistep",
+        "scheduler": "simple"
+      },
+      "title": "BSAI SolarWM-H3 Generate (一键生成)"
+    }
+  ],
+  "links": [
+    [
+      246,
+      128,
+      0,
+      129,
+      1,
+      "VAE"
+    ],
+    [
+      247,
+      127,
+      0,
+      130,
+      1,
+      "VAE"
+    ],
+    [
+      254,
+      130,
+      0,
+      138,
+      0,
+      "IMAGE"
+    ],
+    [
+      255,
+      129,
+      0,
+      138,
+      1,
+      "AUDIO"
+    ],
+    [
+      256,
+      136,
+      0,
+      139,
+      0,
+      "CLIP"
+    ],
+    [
+      257,
+      127,
+      0,
+      139,
+      1,
+      "VAE"
+    ],
+    [
+      266,
+      135,
+      0,
+      142,
+      0,
+      "MODEL"
+    ],
+    [
+      281,
+      142,
+      0,
+      152,
+      0,
+      "MODEL"
+    ],
+    [
+      293,
+      152,
+      0,
+      155,
+      0,
+      "MODEL"
+    ],
+    [
+      295,
+      139,
+      0,
+      155,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      296,
+      139,
+      1,
+      155,
+      1,
+      "LATENT"
+    ],
+    [
+      258,
+      138,
+      0,
+      92,
+      0,
+      "VIDEO"
+    ],
+    [
+      297,
+      155,
+      0,
+      130,
+      0,
+      "LATENT"
+    ],
+    [
+      298,
+      155,
+      0,
+      129,
+      0,
+      "LATENT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 5,
+      "title": "Use Image Size",
+      "bounding": [
+        -2794.862886656892,
+        5480.805539493661,
+        589.4938996667402,
+        258.38598608304164
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 1,
+      "title": "Models",
+      "bounding": [
+        -2215,
+        4480,
+        700,
+        980
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "Sampling",
+      "bounding": [
+        -524.2912244086414,
+        4477.47346886643,
+        700,
+        800
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "Conditioning",
+      "bounding": [
+        -1492.5795934007103,
+        4482.52653113357,
+        601.0612657961467,
+        801.1209376462612
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "Decoding and create video",
+      "bounding": [
+        188.45222799508718,
+        4478.048687119639,
+        1233.5661827868462,
+        805.604688231303
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Switch",
+      "bounding": [
+        -870.4824600664705,
+        4478.588571182884,
+        334.1319964041015,
+        795.5162494149581
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5539302967747691,
+      "offset": [
+        4150.797623815911,
+        -3905.345126592067
+      ]
+    },
+    "frontendVersion": "1.53.6",
+    "VHS_KeepIntermediate": true,
+    "VHS_MetadataImage": true,
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0
+  },
+  "version": 0.4
+}

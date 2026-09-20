@@ -138,6 +138,77 @@ def build_orbit_camera(frames: int, turn: float = 0.0, radius: float = 3.0,
     return torch.tensor(eyes, dtype=torch.float32)
 
 
+def build_enhanced_camera(
+    frames: int,
+    orbit_turns: float = 0.0,
+    radius: float = 3.0,
+    radius_end=None,
+    height: float = 0.0,
+    height_end=None,
+    start_angle: float = 0.0,
+    pan_speed: float = 0.0,
+    tilt_speed: float = 0.0,
+    look_at_y: float = 0.0,
+):
+    """Enhanced camera: orbit + dolly + height sweep + pan + tilt.
+
+    Args:
+        frames: number of trajectory frames.
+        orbit_turns: Y-axis orbit turns (negative=reverse).
+        radius: start camera distance.
+        radius_end: end distance (None=constant).
+        height: start camera height.
+        height_end: end height (None=constant).
+        start_angle: starting angle offset in turns (0..1).
+        pan_speed: horizontal pan in turns across clip.
+        tilt_speed: vertical tilt in radians across clip.
+        look_at_y: look-at point Y offset.
+    """
+    start_r = float(radius)
+    end_r = start_r if radius_end is None else float(radius_end)
+    start_h = float(height)
+    end_h = start_h if height_end is None else float(height_end)
+    step_den = max(1, frames - 1)
+    eyes = []
+    for i in range(frames):
+        frac = (i / step_den) if frames > 1 else 0.0
+        r = max(start_r + (end_r - start_r) * frac, 1e-3)
+        h = start_h + (end_h - start_h) * frac
+        yaw = (start_angle + orbit_turns * frac) * 2.0 * math.pi
+        cx, cz = r * math.cos(yaw), r * math.sin(yaw)
+        pan_yaw = pan_speed * 2.0 * math.pi * frac
+        tilt = tilt_speed * frac
+        lx, ly, lz = 0.0, look_at_y, 0.0
+        fx, fy, fz = lx - cx, ly - h, lz - cz
+        if abs(tilt) > 1e-6:
+            fx2 = fx * math.cos(tilt) + fz * math.sin(tilt)
+            fy2 = fy
+            fz2 = -fx * math.sin(tilt) + fz * math.cos(tilt)
+            fx, fy, fz = fx2, fy2, fz2
+        if abs(pan_yaw) > 1e-6:
+            fx2 = fx * math.cos(pan_yaw) - fz * math.sin(pan_yaw)
+            fz2 = fx * math.sin(pan_yaw) + fz * math.cos(pan_yaw)
+            fx, fz = fx2, fz2
+        n = math.sqrt(fx * fx + fy * fy + fz * fz) or 1.0
+        fx, fy, fz = fx / n, fy / n, fz / n
+        up = (0.0, 1.0, 0.0)
+        sx = fy * up[2] - fz * up[1]
+        sy = fz * up[0] - fx * up[2]
+        sz = fx * up[1] - fy * up[0]
+        sn = math.sqrt(sx * sx + sy * sy + sz * sz) or 1.0
+        sx, sy, sz = sx / sn, sy / sn, sz / sn
+        ux = sy * fz - sz * fy
+        uy = sz * fx - sx * fz
+        uz = sx * fy - sy * fx
+        eyes.append([
+            [sx, ux, -fx, cx],
+            [sy, uy, -fy, h],
+            [sz, uz, -fz, cz],
+            [0.0, 0.0, 0.0, 1.0],
+        ])
+    return torch.tensor(eyes, dtype=torch.float32)
+
+
 # ---------------------------------------------------------------------------
 # H3 fused camera-PRoPE math (faithful ports of SolarWM backend)
 # ---------------------------------------------------------------------------
