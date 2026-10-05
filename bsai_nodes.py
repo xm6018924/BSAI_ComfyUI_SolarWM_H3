@@ -14,6 +14,24 @@ from .payload import (
     latent_pixel_count,
 )
 
+# ==== BSAI 插件协同 SDK：加载即自动注册（失败不拖垮插件） ====
+try:
+    import sys as _bsai_sys, os as _bsai_os
+    _BSAI_ORCH_DIR = _bsai_os.path.join(
+        _bsai_os.path.dirname(_bsai_os.path.abspath(__file__)),
+        "..", "BSAI-ComfyUI-Orchestrator")
+    if _bsai_os.path.isdir(_BSAI_ORCH_DIR) and _BSAI_ORCH_DIR not in _bsai_sys.path:
+        _bsai_sys.path.insert(0, _BSAI_ORCH_DIR)
+    from bsai_orch_client import BSAIOrch  # noqa: E402
+    BSAIOrch.register(
+        name="BSAI-SolarWM-H3",
+        kind="sampling",
+        hardware=["cuda"],
+    )
+except Exception as _bsai_e:  # 注册失败不得拖垮插件
+    print(f"[BSAI SDK] BSAI-SolarWM-H3 注册失败(忽略): {_bsai_e}")
+# ==== BSAI SDK 块结束 ====
+
 
 def _conditioning_text_len(positive):
     """Text token count from a ComfyUI CONDITIONING input."""
@@ -292,11 +310,27 @@ class BSAI_SolarWM_H3_Generate:
         batch_inds = latent_out.get("batch_index", None)
         noise = comfy.sample.prepare_noise(latent_image, seed, batch_inds)
 
-        samples = guider.sample(
-            noise, latent_image, sampler, sigmas,
-            denoise_mask=noise_mask, callback=callback,
-            disable_pbar=disable_pbar, seed=seed,
-        )
+        # ---- BSAI 协同：GPU 主采样租约（失败不阻断采样，仅叠加租约管理） ----
+        _bsai_alloc = None
+        try:
+            _bsai_alloc = BSAIOrch.allocate("sampling", requester="8191")
+            if not _bsai_alloc.ok:
+                print(f"[BSAI-SolarWM-H3] SDK 未取得 gpu1_sampling 租约({_bsai_alloc.reason})，仍按原逻辑采样")
+        except Exception as _bsai_ae:
+            print(f"[BSAI-SolarWM-H3] SDK allocate 异常(忽略): {_bsai_ae}")
+            _bsai_alloc = None
+        try:
+            samples = guider.sample(
+                noise, latent_image, sampler, sigmas,
+                denoise_mask=noise_mask, callback=callback,
+                disable_pbar=disable_pbar, seed=seed,
+            )
+        finally:
+            if _bsai_alloc is not None:
+                try:
+                    _bsai_alloc.release()
+                except Exception:
+                    pass
         samples = samples.to(comfy.model_management.intermediate_device())
 
         latent_out.pop("downscale_ratio_spacial", None)
