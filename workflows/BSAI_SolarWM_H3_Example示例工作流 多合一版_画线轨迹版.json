@@ -1,0 +1,3060 @@
+{
+  "id": "580e4626-2c8b-4737-a07b-485b76039cd2",
+  "revision": 0,
+  "last_node_id": 179,
+  "last_link_id": 337,
+  "nodes": [
+    {
+      "id": 92,
+      "type": "SaveVideo",
+      "pos": [
+        -240.33000018653857,
+        4591.930529880539
+      ],
+      "size": [
+        1671.6920292710402,
+        1025.7082297322368
+      ],
+      "flags": {},
+      "order": 30,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 258
+        }
+      ],
+      "outputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0"
+      },
+      "widgets_values": [
+        "video/MiniMax_H3",
+        "auto",
+        "auto",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "video/MiniMax_H3",
+        "format": "auto",
+        "format.codec": "auto",
+        "codec": "auto"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 127,
+      "type": "VAELoader",
+      "pos": [
+        -2562.368721217262,
+        5073.684747477631
+      ],
+      "size": [
+        638.1017797644101,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            247,
+            257,
+            326,
+            328
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "models": [
+          {
+            "name": "minimax_h3_video_vae_fp16.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_video_vae_fp16.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 128,
+      "type": "VAELoader",
+      "pos": [
+        -2556.0453626776653,
+        5221.404736860106
+      ],
+      "size": [
+        641.6668131657607,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            246,
+            327
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "models": [
+          {
+            "name": "minimax_h3_audio_vae_fp32.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/vae/minimax_h3_audio_vae_fp32.safetensors",
+            "directory": "vae"
+          }
+        ]
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 129,
+      "type": "VAEDecodeAudio",
+      "pos": [
+        -498.38264342877466,
+        4730.3346011134145
+      ],
+      "size": [
+        230,
+        80
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 28,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 298
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 246
+        }
+      ],
+      "outputs": [
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [
+            255
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecodeAudio",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 130,
+      "type": "VAEDecode",
+      "pos": [
+        -498.3827976359971,
+        4601.282876991012
+      ],
+      "size": [
+        230,
+        80
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 27,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 297
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 247
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            254
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 136,
+      "type": "CLIPLoader",
+      "pos": [
+        -2558.0492616024244,
+        4862.638817688081
+      ],
+      "size": [
+        655.9070855742432,
+        106
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            256,
+            322,
+            323
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "models": [
+          {
+            "name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            "url": "https://huggingface.co/Comfy-Org/MiniMax-H3/resolve/main/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+            "directory": "text_encoders"
+          }
+        ]
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "minimax",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_32b_minimax_h3_int8_convrot.safetensors",
+        "type": "minimax",
+        "device": "default"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 138,
+      "type": "CreateVideo",
+      "pos": [
+        -506.5706775381634,
+        4858.914143562228
+      ],
+      "size": [
+        236.31291821906552,
+        150
+      ],
+      "flags": {},
+      "order": 29,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 254
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 255
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            258
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0"
+      },
+      "widgets_values": [
+        24,
+        8,
+        "sRGB",
+        "none"
+      ],
+      "widgets_values_named": {
+        "fps": 24,
+        "bit_depth": 8,
+        "color_space": "sRGB",
+        "codec": "none"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 139,
+      "type": "MiniMaxH3ImageToVideo",
+      "pos": [
+        -1529.0139334195194,
+        6005.7034876354965
+      ],
+      "size": [
+        624.311313909966,
+        483.00296967153736
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 256
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 257
+        },
+        {
+          "name": "first_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "last_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": []
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ImageToVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0"
+      },
+      "widgets_values": [
+        "A glossy black sports car is parked completely still on a vast dry lake bed.\n\nThe car remains completely stationary throughout the entire shot.\nThe wheels do not rotate and the vehicle does not move.\n\nThe camera moves slowly and smoothly straight forward toward the rear of the car.\nThe camera does not orbit around the vehicle and does not move sideways.\n\nThe car remains centered and geometrically stable.\nIts body shape, taillights, wheels and proportions remain unchanged.\n\nThe mountains, horizon and dry lake surface remain spatially stable.\nNatural perspective and subtle parallax only.\n\nNo lateral camera movement.\nNo orbit.\nNo rotation around the car.\nNo scene morphing.\nNo geometry distortion.\nNo background sliding.\n\nBright midday sunlight with realistic shadows.\n\nAudio: no dialogue, no human voice, no music.\nOnly gentle desert wind and a quiet engine idle.",
+        1344,
+        768,
+        73
+      ],
+      "widgets_values_named": {
+        "prompt": "A glossy black sports car is parked completely still on a vast dry lake bed.\n\nThe car remains completely stationary throughout the entire shot.\nThe wheels do not rotate and the vehicle does not move.\n\nThe camera moves slowly and smoothly straight forward toward the rear of the car.\nThe camera does not orbit around the vehicle and does not move sideways.\n\nThe car remains centered and geometrically stable.\nIts body shape, taillights, wheels and proportions remain unchanged.\n\nThe mountains, horizon and dry lake surface remain spatially stable.\nNatural perspective and subtle parallax only.\n\nNo lateral camera movement.\nNo orbit.\nNo rotation around the car.\nNo scene morphing.\nNo geometry distortion.\nNo background sliding.\n\nBright midday sunlight with realistic shadows.\n\nAudio: no dialogue, no human voice, no music.\nOnly gentle desert wind and a quiet engine idle.",
+        "width": 1344,
+        "height": 768,
+        "length": 73
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 155,
+      "type": "BSAI_SolarWM_H3_Generate",
+      "pos": [
+        -862.4605886967696,
+        4599.9123715174865
+      ],
+      "size": [
+        300.85118824135725,
+        670
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 330
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 324
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "link": 325
+        },
+        {
+          "name": "camera",
+          "type": "SOLARWM_CAMERA",
+          "link": 337
+        }
+      ],
+      "outputs": [
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": [
+            297,
+            298
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BSAI_SolarWM_H3_Generate",
+        "aux_id": "xm6018924/BSAI_ComfyUI_SolarWM_H3",
+        "ver": "d579dcc6bb0d0308f7c4a51786a4a5a456f9f5b7"
+      },
+      "widgets_values": [
+        0,
+        0.1,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        520010315849267,
+        "randomize",
+        8,
+        "res_multistep",
+        "simple",
+        ""
+      ],
+      "widgets_values_named": {
+        "orbit_turns": 0,
+        "radius": 0.1,
+        "radius_end": 1,
+        "height": 0,
+        "height_end": 0,
+        "start_angle": 0,
+        "pan_speed": 0,
+        "tilt_speed": 0,
+        "look_at_y": 0,
+        "seed": 520010315849267,
+        "control_after_generate": "randomize",
+        "steps": 8,
+        "sampler_name": "res_multistep",
+        "scheduler": "simple",
+        "bsai_solarwm_draw": ""
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 157,
+      "type": "BSAI_SolarWM_H3_Loader",
+      "pos": [
+        -2566.3355757858253,
+        4590.924471406786
+      ],
+      "size": [
+        670.1168081616767,
+        174
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            329
+          ]
+        },
+        {
+          "name": "solar_info_信息",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BSAI_SolarWM_H3_Loader",
+        "aux_id": "xm6018924/BSAI_ComfyUI_SolarWM_H3",
+        "ver": "d579dcc6bb0d0308f7c4a51786a4a5a456f9f5b7"
+      },
+      "widgets_values": [
+        "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+        "minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+        1,
+        "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        1
+      ],
+      "widgets_values_named": {
+        "base_model": "minimax_h3_hybrid_fl2va_ref2va_b25-49-int8.safetensors",
+        "turbo_lora": "minimax_h3_fl2v_turbo_4step_v1.2_768p_comfyui_bf16.safetensors",
+        "turbo_strength": 1,
+        "solarwm_lora": "solarwm_h3_stage05_adapter_model_comfy_new.safetensors",
+        "solarwm_strength": 1
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 158,
+      "type": "Note",
+      "pos": [
+        -1860.4777895099855,
+        5139.560951499446
+      ],
+      "size": [
+        314.02025894821077,
+        438.1801856550883
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "BSAI SolarWM-H3 Loader / 模型加载器\n================================\nbase_model: H3 diffusion model / H3扩散模型\nturbo_lora: 4-step distill LoRA / 4步蒸馏LoRA\nturbo_strength: LoRA强度 (default 1.0)\nsolarwm_lora: Camera adapter LoRA / 相机LoRA\nsolarwm_strength: LoRA强度 (default 1.0)\nOutput: model -> Generate"
+      ],
+      "widgets_values_named": {
+        "text": "BSAI SolarWM-H3 Loader / 模型加载器\n================================\nbase_model: H3 diffusion model / H3扩散模型\nturbo_lora: 4-step distill LoRA / 4步蒸馏LoRA\nturbo_strength: LoRA强度 (default 1.0)\nsolarwm_lora: Camera adapter LoRA / 相机LoRA\nsolarwm_strength: LoRA强度 (default 1.0)\nOutput: model -> Generate"
+      },
+      "color": "#432",
+      "bgcolor": "rgba(0,0,0,0)",
+      "resizable": true,
+      "extensions": {
+        "resizable": true
+      }
+    },
+    {
+      "id": 159,
+      "type": "Note",
+      "pos": [
+        -860.9657825172792,
+        5303.323194571906
+      ],
+      "size": [
+        300.38719787743923,
+        241.08673171575902
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "BSAI SolarWM-H3 Generate / 一键生成\n================================\n[Camera / 相机参数]\norbit_turns: 环绕圈数 (负=反向) / Orbit turns\nradius: 起始距离 / Start distance\nradius_end: 结束距离 (推拉) / End distance\nheight: 相机高度 / Camera height\nheight_end: 结束高度 (升降) / End height\nstart_angle: 起始角度 (0=前 0.25=侧) / Start angle\npan_speed: 水平摇摄 / Pan speed\ntilt_speed: 俯仰弧度 / Tilt speed\nlook_at_y: 注视点高度 / Look-at Y\n================================\n[Sampling / 采样]\nseed: 随机种子 / Random seed\nsteps: 去噪步数 (蒸馏用4) / Denoise steps\nsampler_name: 采样器 / Sampler\nscheduler: 调度器 / Scheduler\n鼠标滚轮可调节数值"
+      ],
+      "widgets_values_named": {
+        "text": "BSAI SolarWM-H3 Generate / 一键生成\n================================\n[Camera / 相机参数]\norbit_turns: 环绕圈数 (负=反向) / Orbit turns\nradius: 起始距离 / Start distance\nradius_end: 结束距离 (推拉) / End distance\nheight: 相机高度 / Camera height\nheight_end: 结束高度 (升降) / End height\nstart_angle: 起始角度 (0=前 0.25=侧) / Start angle\npan_speed: 水平摇摄 / Pan speed\ntilt_speed: 俯仰弧度 / Tilt speed\nlook_at_y: 注视点高度 / Look-at Y\n================================\n[Sampling / 采样]\nseed: 随机种子 / Random seed\nsteps: 去噪步数 (蒸馏用4) / Denoise steps\nsampler_name: 采样器 / Sampler\nscheduler: 调度器 / Scheduler\n鼠标滚轮可调节数值"
+      },
+      "color": "#432",
+      "bgcolor": "rgba(0,0,0,0)",
+      "resizable": true,
+      "extensions": {
+        "resizable": true
+      }
+    },
+    {
+      "id": 160,
+      "type": "easy ifElse",
+      "pos": [
+        -1202.1965686055212,
+        5730.773667449005
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_true",
+          "type": "*",
+          "link": 300
+        },
+        {
+          "name": "on_false",
+          "type": "*",
+          "link": 301
+        },
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "boolean"
+          },
+          "link": 302
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            324
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy ifElse",
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "boolean": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "boolean": false
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 161,
+      "type": "easy ifElse",
+      "pos": [
+        -1196.741017638301,
+        5854.536961928815
+      ],
+      "size": [
+        270,
+        78
+      ],
+      "flags": {},
+      "order": 24,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "on_true",
+          "type": "*",
+          "link": 303
+        },
+        {
+          "name": "on_false",
+          "type": "*",
+          "link": 304
+        },
+        {
+          "name": "boolean",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "boolean"
+          },
+          "link": 305
+        }
+      ],
+      "outputs": [
+        {
+          "name": "*",
+          "type": "*",
+          "links": [
+            325
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "easy ifElse",
+        "cnr_id": "comfyui-easy-use",
+        "ver": "1.3.6",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {
+            "boolean": true
+          },
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        false
+      ],
+      "widgets_values_named": {
+        "boolean": false
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 162,
+      "type": "ModelAttentionBackend",
+      "pos": [
+        -1852.4015376702112,
+        4586.007269501284
+      ],
+      "size": [
+        289.6688716545143,
+        58
+      ],
+      "flags": {
+        "disabled": false
+      },
+      "order": 15,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 329
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            307
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelAttentionBackend",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.6"
+        }
+      },
+      "widgets_values": [
+        "comfy kitchen attention"
+      ],
+      "widgets_values_named": {
+        "attention": "comfy kitchen attention"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 163,
+      "type": "ComfyMathExpression",
+      "pos": [
+        -2427.363028338969,
+        5528.772380432902
+      ],
+      "size": [
+        360,
+        160
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "values.a",
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 306
+        },
+        {
+          "name": "values.b",
+          "shape": 7,
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": null
+        },
+        {
+          "label": "expression",
+          "name": "expression",
+          "type": "STRING",
+          "widget": {
+            "name": "expression"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "FLOAT",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": []
+        },
+        {
+          "label": "INT",
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            315,
+            321
+          ]
+        },
+        {
+          "label": "BOOL",
+          "name": "BOOL",
+          "type": "BOOLEAN",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ComfyMathExpression",
+        "cnr_id": "comfy-core",
+        "ver": "0.29.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+      ],
+      "widgets_values_named": {
+        "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 164,
+      "type": "MiniMaxChunkFeedForward",
+      "pos": [
+        -1848.5968727848501,
+        4698.143219522788
+      ],
+      "size": [
+        275.40271043904215,
+        82
+      ],
+      "flags": {
+        "disabled": false
+      },
+      "order": 19,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 307
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            308
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxChunkFeedForward",
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "60cd6bc1870db94c6eeb05fbe455147a8e91c4e9",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        2,
+        4096
+      ],
+      "widgets_values_named": {
+        "chunks": 2,
+        "seq_threshold": 4096
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 165,
+      "type": "MiniMaxLowVRAMAttention",
+      "pos": [
+        -1849.848930313635,
+        4834.697754851543
+      ],
+      "size": [
+        276.02057954141867,
+        58
+      ],
+      "flags": {
+        "disabled": false
+      },
+      "order": 22,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 308
+        }
+      ],
+      "outputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "links": [
+            309
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxLowVRAMAttention",
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "60cd6bc1870db94c6eeb05fbe455147a8e91c4e9",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.8"
+        }
+      },
+      "widgets_values": [
+        4
+      ],
+      "widgets_values_named": {
+        "head_chunks": 4
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 166,
+      "type": "MiniMaxH3SigmaShift",
+      "pos": [
+        -1842.587390104258,
+        4947.6386751557375
+      ],
+      "size": [
+        270.0950968321828,
+        82
+      ],
+      "flags": {
+        "disabled": false
+      },
+      "order": 25,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 309
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            330
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3SigmaShift",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "input_ue_unconnectable": {},
+          "version": "7.6"
+        }
+      },
+      "widgets_values": [
+        12,
+        3
+      ],
+      "widgets_values_named": {
+        "shift_video": 12,
+        "shift_audio": 3
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 167,
+      "type": "MiniMaxH3ReferenceToVideo",
+      "pos": [
+        -1510.8862561439914,
+        4587.2982366447995
+      ],
+      "size": [
+        585.0194324072941,
+        484
+      ],
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "clip",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 322
+        },
+        {
+          "label": "vae",
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 326
+        },
+        {
+          "label": "audio_vae",
+          "name": "audio_vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": 327
+        },
+        {
+          "label": "ref_images.ref_image_0",
+          "name": "ref_images.ref_image_0",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 310
+        },
+        {
+          "name": "ref_images.ref_image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 334
+        },
+        {
+          "name": "ref_images.ref_image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 335
+        },
+        {
+          "label": "ref_videos.ref_video_0",
+          "name": "ref_videos.ref_video_0",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "label": "ref_video_audios.ref_video_audio_0",
+          "name": "ref_video_audios.ref_video_audio_0",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "label": "ref_audios.ref_audio_0",
+          "name": "ref_audios.ref_audio_0",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "ref_audios.ref_audio_1",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "ref_audios.ref_audio_2",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "label": "prompt",
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 331
+        },
+        {
+          "label": "width",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 313
+        },
+        {
+          "label": "height",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 314
+        },
+        {
+          "label": "length",
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 315
+        },
+        {
+          "label": "ref_image_size",
+          "name": "ref_image_size",
+          "type": "COMBO",
+          "widget": {
+            "name": "ref_image_size"
+          },
+          "link": null
+        },
+        {
+          "name": "ref_video_audios.ref_video_audio_1",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "ref_video_audios.ref_video_audio_2",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        },
+        {
+          "name": "ref_images.ref_image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_images.ref_image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "positive",
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            300
+          ]
+        },
+        {
+          "label": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "slot_index": 1,
+          "links": [
+            303
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ReferenceToVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        832,
+        480,
+        124,
+        "match"
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "width": 832,
+        "height": 480,
+        "length": 124,
+        "ref_image_size": "match"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 168,
+      "type": "MiniMaxH3ImageToVideo",
+      "pos": [
+        -1505.396725898832,
+        5323.1857914901
+      ],
+      "size": [
+        575.7091818531248,
+        281.97795481875846
+      ],
+      "flags": {
+        "disabled": false
+      },
+      "order": 21,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 323
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 328
+        },
+        {
+          "name": "first_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 317
+        },
+        {
+          "name": "last_frame",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 318
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 332
+        },
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 319
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 320
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 321
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            301
+          ]
+        },
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            304
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MiniMaxH3ImageToVideo",
+        "cnr_id": "comfy-core",
+        "ver": "0.33.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.6",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "",
+        1344,
+        768,
+        90
+      ],
+      "widgets_values_named": {
+        "prompt": "",
+        "width": 1344,
+        "height": 768,
+        "length": 90
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 169,
+      "type": "PrimitiveBoolean",
+      "pos": [
+        -1510.636564403939,
+        5801.835950684619
+      ],
+      "size": [
+        270,
+        58
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BOOLEAN",
+          "type": "BOOLEAN",
+          "links": [
+            302,
+            305
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveBoolean",
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        true
+      ],
+      "widgets_values_named": {
+        "value": true
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 170,
+      "type": "LoadImage",
+      "pos": [
+        -3029.1694931196016,
+        4595.524239080774
+      ],
+      "size": [
+        407.0242831600808,
+        326
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            310,
+            317,
+            336
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "guhaiImageValue": "02沈曼.png",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        },
+        "#sdppp_variant": "default",
+        "#sdppp_simple_content": "canvas",
+        "#sdppp_simple_mask": "canvas",
+        "#sdppp_simple_boundary": "canvas",
+        "#sdppp_label": ""
+      },
+      "widgets_values": [
+        "场景001.jpg",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "场景001.jpg",
+        "upload": "image"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 171,
+      "type": "LoadImage",
+      "pos": [
+        -3022.6186822517006,
+        4988.635381068107
+      ],
+      "size": [
+        396.9981160995869,
+        326
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            318,
+            334
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "guhaiImageValue": "ComfyUI_00002_.png",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        },
+        "#sdppp_variant": "default",
+        "#sdppp_simple_content": "canvas",
+        "#sdppp_simple_mask": "canvas",
+        "#sdppp_simple_boundary": "canvas",
+        "#sdppp_label": ""
+      },
+      "widgets_values": [
+        "02沈曼.png",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "02沈曼.png",
+        "upload": "image"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 172,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -2563.655057636184,
+        5404.4084630019925
+      ],
+      "size": [
+        270,
+        70
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "value",
+          "name": "value",
+          "type": "FLOAT",
+          "widget": {
+            "name": "value"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "FLOAT",
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            306
+          ]
+        }
+      ],
+      "title": "Float (duration)",
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat",
+        "cnr_id": "comfy-core",
+        "ver": "0.29.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        5
+      ],
+      "widgets_values_named": {
+        "value": 5
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 173,
+      "type": "ResolutionSelector",
+      "pos": [
+        -2258.422472436737,
+        5405.939748078823
+      ],
+      "size": [
+        343.69786343178555,
+        150
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "showAdvanced": true,
+      "inputs": [
+        {
+          "label": "aspect_ratio",
+          "name": "aspect_ratio",
+          "type": "COMBO",
+          "widget": {
+            "name": "aspect_ratio"
+          },
+          "link": null
+        },
+        {
+          "label": "megapixels",
+          "name": "megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "megapixels"
+          },
+          "link": null
+        },
+        {
+          "label": "multiple",
+          "name": "multiple",
+          "type": "INT",
+          "widget": {
+            "name": "multiple"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "width",
+          "name": "width",
+          "type": "INT",
+          "links": [
+            313,
+            319
+          ]
+        },
+        {
+          "label": "height",
+          "name": "height",
+          "type": "INT",
+          "links": [
+            314,
+            320
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ResolutionSelector",
+        "cnr_id": "comfy-core",
+        "ver": "0.29.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.5.2",
+          "input_ue_unconnectable": {}
+        }
+      },
+      "widgets_values": [
+        "16:9 (Widescreen)",
+        1,
+        32
+      ],
+      "widgets_values_named": {
+        "aspect_ratio": "16:9 (Widescreen)",
+        "megapixels": 1,
+        "multiple": 32
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 175,
+      "type": "LoadImage",
+      "pos": [
+        -3016.903485414536,
+        5388.167167428681
+      ],
+      "size": [
+        395.20093620787907,
+        328.5260754716327
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 4,
+      "inputs": [
+        {
+          "label": "图像",
+          "name": "image",
+          "type": "COMBO",
+          "widget": {
+            "name": "image"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "图像",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            335
+          ]
+        },
+        {
+          "label": "遮罩",
+          "name": "MASK",
+          "type": "MASK",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "enableTabs": false,
+        "tabWidth": 65,
+        "tabXOffset": 10,
+        "hasSecondTab": false,
+        "secondTabText": "Send Back",
+        "secondTabOffset": 80,
+        "secondTabWidth": 65,
+        "guhaiImageValue": "island.jpg",
+        "ue_properties": {
+          "widget_ue_connectable": {},
+          "version": "7.8",
+          "input_ue_unconnectable": {}
+        },
+        "#sdppp_variant": "default",
+        "#sdppp_simple_content": "canvas",
+        "#sdppp_simple_mask": "canvas",
+        "#sdppp_simple_boundary": "canvas",
+        "#sdppp_label": ""
+      },
+      "widgets_values": [
+        "b2e19980b99c42038ef8fb1c049c6c4d.webp",
+        "image"
+      ],
+      "widgets_values_named": {
+        "image": "b2e19980b99c42038ef8fb1c049c6c4d.webp",
+        "upload": "image"
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 176,
+      "type": "BSAI_H3_PromptTemplate",
+      "pos": [
+        -2573.6779121344507,
+        5625.174501650898
+      ],
+      "size": [
+        490,
+        618
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "scene_image",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_4",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_5",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_6",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_7",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_8",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "ref_image_9",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "video_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "audio_1",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "prompt_output (提示词输出)",
+          "type": "STRING",
+          "links": [
+            331,
+            332,
+            333
+          ]
+        },
+        {
+          "name": "template_name (模板名称)",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "generation_mode (生成模式)",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "description (描述)",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "video_duration (视频时长)",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "preview_file (预览文件)",
+          "type": "STRING",
+          "links": null
+        },
+        {
+          "name": "last_frame (视频最后一帧)",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "video_1_out (视频1直通)",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "audio_1_out (音频1直通)",
+          "type": "AUDIO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BSAI_H3_PromptTemplate",
+        "aux_id": "xm6018924/BSAI-MiniMAX-H3-Prompt",
+        "ver": "294ed2b8bd6d48a9a5d66e7295ca86b40dcef273"
+      },
+      "widgets_values": [
+        "文生视频 > 自然风光类 > 海岸海浪拍岸",
+        "",
+        "",
+        ""
+      ],
+      "widgets_values_named": {
+        "template_select": "文生视频 > 自然风光类 > 海岸海浪拍岸",
+        "user_customization": "",
+        "narration": "",
+        "bsai_tpl_ui": ""
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 177,
+      "type": "ShowText|pysssss",
+      "pos": [
+        -2068.4695817983365,
+        5628.004732521791
+      ],
+      "size": [
+        518.0531724817258,
+        891.5895663611209
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": 333
+        }
+      ],
+      "outputs": [
+        {
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ShowText|pysssss",
+        "cnr_id": "comfyui-custom-scripts",
+        "ver": "609f3afaa74b2f88ef9ce8d939626065e3247469"
+      },
+      "widgets_values": [
+        "integrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, photorealistic. A rugged coastline at golden hour. Large ocean waves roll in from the horizon, cresting and crashing against dark rock formations. White foam explodes on impact and rushes up the shore. The camera is positioned at a medium-wide angle, slightly elevated. Sea spray catches the warm backlight, creating a misty glow. The horizon glows orange-pink. Seagulls wheel in the distance. The rhythm of the waves is hypnotic — each wave slightly different in size and shape. Wet rocks glisten with reflected light. The camera holds steady, letting the natural power of the ocean be the focus. Long exposure effect on the water creates smooth, silky textures in the receding surf.\n\noverall_soundscape: Rhythmic ocean waves crashing and retreating, sea spray, distant seagulls, and coastal wind.\n\nnon_diegetic_music: A gentle ambient track with soft piano notes and oceanic synth textures, peaceful and meditative."
+      ],
+      "widgets_values_named": {
+        "text_0": "integrated_multimodal_description:  [Shot 1] [0-8s] Cinematic, photorealistic. A rugged coastline at golden hour. Large ocean waves roll in from the horizon, cresting and crashing against dark rock formations. White foam explodes on impact and rushes up the shore. The camera is positioned at a medium-wide angle, slightly elevated. Sea spray catches the warm backlight, creating a misty glow. The horizon glows orange-pink. Seagulls wheel in the distance. The rhythm of the waves is hypnotic — each wave slightly different in size and shape. Wet rocks glisten with reflected light. The camera holds steady, letting the natural power of the ocean be the focus. Long exposure effect on the water creates smooth, silky textures in the receding surf.\n\noverall_soundscape: Rhythmic ocean waves crashing and retreating, sea spray, distant seagulls, and coastal wind.\n\nnon_diegetic_music: A gentle ambient track with soft piano notes and oceanic synth textures, peaceful and meditative."
+      },
+      "bgcolor": "rgba(0,0,0,0)"
+    },
+    {
+      "id": 178,
+      "type": "GroupIgnoreManager",
+      "pos": [
+        -3506.784470086372,
+        4541.452993252919
+      ],
+      "size": [
+        433.6929770202464,
+        284.60388849905485
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {
+        "groups": [
+          {
+            "id": 1789892027261.9822,
+            "group_name": "参考生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.9165,
+            "group_name": "打开解决显存不足问题",
+            "enabled": false,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.345,
+            "group_name": "关闭图片输入区=文生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.406,
+            "group_name": "设置时长和画幅比例与分辨率",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.6804,
+            "group_name": "图生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.9587,
+            "group_name": "图生视频 = False     多参生视频 = ture",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.4746,
+            "group_name": "Decoding and create video",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.272,
+            "group_name": "Models",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.393,
+            "group_name": "Switch",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          }
+        ],
+        "selectedColorFilter": "",
+        "groupOrder": [],
+        "groupStatesCache": {
+          "Models": true,
+          "Decoding and create video": true,
+          "Switch": true,
+          "图生视频": true,
+          "参考生视频": true,
+          "图生视频 = False     多参生视频 = ture": true,
+          "关闭图片输入区=文生视频": true,
+          "打开解决显存不足问题": false,
+          "设置时长和画幅比例与分辨率": true
+        },
+        "managerMode": "custom",
+        "customManagedGroups": [
+          "关闭图片输入区=文生视频",
+          "打开解决显存不足问题",
+          "参考生视频",
+          "图生视频"
+        ],
+        "customGroupOrder": [
+          "关闭图片输入区=文生视频",
+          "打开解决显存不足问题",
+          "参考生视频",
+          "图生视频"
+        ]
+      },
+      "widgets_values": [
+        ""
+      ],
+      "widgets_values_named": {
+        "gmm_ui": ""
+      },
+      "bgcolor": "rgba(0,0,0,0)",
+      "groups": [
+        {
+          "id": 1789892027261.9822,
+          "group_name": "参考生视频",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027261.9165,
+          "group_name": "打开解决显存不足问题",
+          "enabled": false,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027261.345,
+          "group_name": "关闭图片输入区=文生视频",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027261.406,
+          "group_name": "设置时长和画幅比例与分辨率",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027262.6804,
+          "group_name": "图生视频",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027262.9587,
+          "group_name": "图生视频 = False     多参生视频 = ture",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027262.4746,
+          "group_name": "Decoding and create video",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027262.272,
+          "group_name": "Models",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        },
+        {
+          "id": 1789892027262.393,
+          "group_name": "Switch",
+          "enabled": true,
+          "linkage": {
+            "on_enable": [],
+            "on_disable": []
+          },
+          "parameterBinding": {
+            "enabled": false,
+            "nodeId": "",
+            "paramName": "",
+            "mapping": "normal"
+          }
+        }
+      ],
+      "selectedColorFilter": "",
+      "groupOrder": [],
+      "managerMode": "custom",
+      "customManagedGroups": [
+        "关闭图片输入区=文生视频",
+        "打开解决显存不足问题",
+        "参考生视频",
+        "图生视频"
+      ],
+      "customGroupOrder": [
+        "关闭图片输入区=文生视频",
+        "打开解决显存不足问题",
+        "参考生视频",
+        "图生视频"
+      ],
+      "extensions": {
+        "groups": [
+          {
+            "id": 1789892027261.9822,
+            "group_name": "参考生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.9165,
+            "group_name": "打开解决显存不足问题",
+            "enabled": false,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.345,
+            "group_name": "关闭图片输入区=文生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027261.406,
+            "group_name": "设置时长和画幅比例与分辨率",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.6804,
+            "group_name": "图生视频",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.9587,
+            "group_name": "图生视频 = False     多参生视频 = ture",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.4746,
+            "group_name": "Decoding and create video",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.272,
+            "group_name": "Models",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          },
+          {
+            "id": 1789892027262.393,
+            "group_name": "Switch",
+            "enabled": true,
+            "linkage": {
+              "on_enable": [],
+              "on_disable": []
+            },
+            "parameterBinding": {
+              "enabled": false,
+              "nodeId": "",
+              "paramName": "",
+              "mapping": "normal"
+            }
+          }
+        ],
+        "selectedColorFilter": "",
+        "groupOrder": [],
+        "managerMode": "custom",
+        "customManagedGroups": [
+          "关闭图片输入区=文生视频",
+          "打开解决显存不足问题",
+          "参考生视频",
+          "图生视频"
+        ],
+        "customGroupOrder": [
+          "关闭图片输入区=文生视频",
+          "打开解决显存不足问题",
+          "参考生视频",
+          "图生视频"
+        ]
+      }
+    },
+    {
+      "id": 179,
+      "type": "BSAI_SolarWM_H3_PathCamera",
+      "pos": [
+        -2533.4073061231275,
+        4017.1027581401663
+      ],
+      "size": [
+        320,
+        440
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "background",
+          "type": "IMAGE",
+          "link": 336
+        }
+      ],
+      "outputs": [
+        {
+          "name": "camera",
+          "type": "SOLARWM_CAMERA",
+          "links": [
+            337
+          ]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "BSAI_SolarWM_H3_PathCamera"
+      },
+      "widgets_values": [
+        "",
+        "frontal",
+        73,
+        0,
+        3,
+        0,
+        true,
+        1,
+        0.15,
+        "center",
+        0
+      ]
+    }
+  ],
+  "links": [
+    [
+      246,
+      128,
+      0,
+      129,
+      1,
+      "VAE"
+    ],
+    [
+      247,
+      127,
+      0,
+      130,
+      1,
+      "VAE"
+    ],
+    [
+      254,
+      130,
+      0,
+      138,
+      0,
+      "IMAGE"
+    ],
+    [
+      255,
+      129,
+      0,
+      138,
+      1,
+      "AUDIO"
+    ],
+    [
+      256,
+      136,
+      0,
+      139,
+      0,
+      "CLIP"
+    ],
+    [
+      257,
+      127,
+      0,
+      139,
+      1,
+      "VAE"
+    ],
+    [
+      297,
+      155,
+      0,
+      130,
+      0,
+      "LATENT"
+    ],
+    [
+      298,
+      155,
+      0,
+      129,
+      0,
+      "LATENT"
+    ],
+    [
+      300,
+      167,
+      0,
+      160,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      301,
+      168,
+      0,
+      160,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      302,
+      169,
+      0,
+      160,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      303,
+      167,
+      1,
+      161,
+      0,
+      "LATENT"
+    ],
+    [
+      304,
+      168,
+      1,
+      161,
+      1,
+      "LATENT"
+    ],
+    [
+      305,
+      169,
+      0,
+      161,
+      2,
+      "BOOLEAN"
+    ],
+    [
+      307,
+      162,
+      0,
+      164,
+      0,
+      "MODEL"
+    ],
+    [
+      308,
+      164,
+      0,
+      165,
+      0,
+      "MODEL"
+    ],
+    [
+      309,
+      165,
+      0,
+      166,
+      0,
+      "MODEL"
+    ],
+    [
+      317,
+      170,
+      0,
+      168,
+      2,
+      "IMAGE"
+    ],
+    [
+      318,
+      171,
+      0,
+      168,
+      3,
+      "IMAGE"
+    ],
+    [
+      319,
+      173,
+      0,
+      168,
+      5,
+      "INT"
+    ],
+    [
+      320,
+      173,
+      1,
+      168,
+      6,
+      "INT"
+    ],
+    [
+      321,
+      163,
+      1,
+      168,
+      7,
+      "INT"
+    ],
+    [
+      323,
+      136,
+      0,
+      168,
+      0,
+      "CLIP"
+    ],
+    [
+      324,
+      160,
+      0,
+      155,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      325,
+      161,
+      0,
+      155,
+      2,
+      "LATENT"
+    ],
+    [
+      328,
+      127,
+      0,
+      168,
+      1,
+      "VAE"
+    ],
+    [
+      329,
+      157,
+      0,
+      162,
+      0,
+      "MODEL"
+    ],
+    [
+      330,
+      166,
+      0,
+      155,
+      0,
+      "MODEL"
+    ],
+    [
+      332,
+      176,
+      0,
+      168,
+      4,
+      "STRING"
+    ],
+    [
+      333,
+      176,
+      0,
+      177,
+      0,
+      "STRING"
+    ],
+    [
+      336,
+      170,
+      0,
+      179,
+      0,
+      "IMAGE"
+    ],
+    [
+      337,
+      179,
+      0,
+      155,
+      3,
+      "SOLARWM_CAMERA"
+    ],
+    [
+      258,
+      138,
+      0,
+      92,
+      0,
+      "VIDEO"
+    ],
+    [
+      306,
+      172,
+      0,
+      163,
+      0,
+      "FLOAT"
+    ],
+    [
+      322,
+      136,
+      0,
+      167,
+      0,
+      "CLIP"
+    ],
+    [
+      326,
+      127,
+      0,
+      167,
+      1,
+      "VAE"
+    ],
+    [
+      327,
+      128,
+      0,
+      167,
+      2,
+      "VAE"
+    ],
+    [
+      310,
+      170,
+      0,
+      167,
+      3,
+      "IMAGE"
+    ],
+    [
+      334,
+      171,
+      0,
+      167,
+      4,
+      "IMAGE"
+    ],
+    [
+      335,
+      175,
+      0,
+      167,
+      5,
+      "IMAGE"
+    ],
+    [
+      331,
+      176,
+      0,
+      167,
+      11,
+      "STRING"
+    ],
+    [
+      313,
+      173,
+      0,
+      167,
+      12,
+      "INT"
+    ],
+    [
+      314,
+      173,
+      1,
+      167,
+      13,
+      "INT"
+    ],
+    [
+      315,
+      163,
+      1,
+      167,
+      14,
+      "INT"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "Models",
+      "bounding": [
+        -2582.620816798646,
+        4512.823396326553,
+        701.8982202355896,
+        803.4655180901418
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "Decoding and create video",
+      "bounding": [
+        -516.825463455841,
+        4523.049965435545,
+        1968.3154248708852,
+        1113.405026746911
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 6,
+      "title": "Switch",
+      "bounding": [
+        -892.9159719416236,
+        4521.729940173564,
+        367.7602626251289,
+        1117.225285475146
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 7,
+      "title": "图生视频",
+      "bounding": [
+        -1531.618176159728,
+        5243.891700003683,
+        628.5993865195114,
+        396.3863024513339
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 8,
+      "title": "参考生视频",
+      "bounding": [
+        -1534.9969797316799,
+        4518.909691830729,
+        632.7477558142457,
+        711.9978386344001
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 9,
+      "title": "图生视频 = False     多参生视频 = ture",
+      "bounding": [
+        -1528.9876742075717,
+        5655.004388079291,
+        623.9135050973692,
+        303.9396136715392
+      ],
+      "color": "#a1309b",
+      "flags": {}
+    },
+    {
+      "id": 10,
+      "title": "关闭图片输入区=文生视频",
+      "bounding": [
+        -3041.546190590795,
+        4512.439870886202,
+        449.6801541487812,
+        1233.1401894527517
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    },
+    {
+      "id": 11,
+      "title": "打开解决显存不足问题",
+      "bounding": [
+        -1865.9630442252599,
+        4514.340662327075,
+        317.62578191939224,
+        583.491712003196
+      ],
+      "color": "#b58b2a",
+      "flags": {}
+    },
+    {
+      "id": 12,
+      "title": "设置时长和画幅比例与分辨率",
+      "bounding": [
+        -2580.0168845064145,
+        5326.683950257572,
+        700.122830222917,
+        249.0666047035793
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.0794534415331016,
+      "offset": [
+        3419.410438427217,
+        -3822.9639118770624
+      ]
+    },
+    "frontendVersion": "1.53.10",
+    "VHS_KeepIntermediate": true,
+    "VHS_MetadataImage": true,
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "qgn_navigation_groups": [],
+    "qgn_locked": false
+  },
+  "extensions": {
+    "seed_widgets": {
+      "155": 9
+    }
+  },
+  "version": 0.4,
+  "seed_widgets": {
+    "155": 9
+  }
+}
