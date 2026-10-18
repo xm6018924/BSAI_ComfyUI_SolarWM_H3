@@ -29,7 +29,7 @@ try:
         hardware=["cuda"],
     )
 except Exception as _bsai_e:  # 注册失败不得拖垮插件
-    print(f"[BSAI SDK] BSAI-SolarWM-H3 注册失败(忽略): {_bsai_e}")
+    print(f"[BSAI SDK] BSAI-SolarWM-H3 registration failed (ignored): {_bsai_e}")
 # ==== BSAI SDK 块结束 ====
 
 
@@ -90,15 +90,15 @@ class BSAI_SolarWM_H3_CameraAttach:
                 "model": ("MODEL",),
                 "orbit_turns_环绕圈数": ("FLOAT", {
                     "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
-                    "tooltip": "环绕圈数 (负=反向) | Orbit turns (negative=reverse), e.g. -0.02=slow dolly-in test",
+                    "tooltip": "Orbit turns (negative=reverse), e.g. -0.02=slow dolly-in test",
                 }),
                 "radius_起始半径": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
-                    "tooltip": "起始相机距离 | Start camera distance",
+                    "tooltip": "Start camera distance",
                 }),
                 "radius_end_结束半径": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
-                    "tooltip": "结束距离 (r_end<r=推近, r_end>r=拉远) | End distance (dolly-in/out)",
+                    "tooltip": "End distance (dolly-in/out)",
                 }),
                 "latent": ("LATENT",),
                 "positive": ("CONDITIONING",),
@@ -109,14 +109,14 @@ class BSAI_SolarWM_H3_CameraAttach:
     RETURN_NAMES = ("model",)
     FUNCTION = "attach"
     CATEGORY = "BSAI/SolarWM-H3"
-    DESCRIPTION = "BSAI SolarWM-H3 相机轨迹注入 (fused-PRoPE) | Camera trajectory inject"
+    DESCRIPTION = "BSAI SolarWM-H3 Camera trajectory inject (fused-PRoPE)"
 
     def attach(self, model, orbit_turns_环绕圈数, radius_起始半径,
                radius_end_结束半径, latent, positive):
         video = _latent_video_dims(latent)
         if video is None:
             raise ValueError(
-                "BSAI SolarWM-H3: 需要 H3 AV LATENT (samples [B,24,T,H,W])"
+                "BSAI SolarWM-H3: expected H3 AV LATENT (samples [B,24,T,H,W])"
             )
         latent_t, latent_h, latent_w = video
         traj_frames = latent_pixel_count(latent_t)
@@ -124,7 +124,7 @@ class BSAI_SolarWM_H3_CameraAttach:
         text_len = _conditioning_text_len(positive)
         if text_len is None:
             raise ValueError(
-                "BSAI SolarWM-H3: 需要 positive CONDITIONING 来获取文本长度"
+                "BSAI SolarWM-H3: expected positive CONDITIONING to derive text length"
             )
 
         prope = SolarWMProPE(
@@ -173,59 +173,59 @@ class BSAI_SolarWM_H3_Generate:
                 "latent": ("LATENT",),
                 "orbit_turns": ("FLOAT", {
                     "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
-                    "tooltip": "环绕圈数(负=反向) | Orbit turns (negative=reverse)",
+                    "tooltip": "Orbit turns (negative=reverse)",
                 }),
                 "radius": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
-                    "tooltip": "起始相机距离 | Start camera distance",
+                    "tooltip": "Start camera distance",
                 }),
                 "radius_end": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
-                    "tooltip": "结束距离(推近/拉远) | End distance (dolly-in/out)",
+                    "tooltip": "End distance (dolly-in/out)",
                 }),
                 "height": ("FLOAT", {
                     "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
-                    "tooltip": "相机高度 | Camera height (Y axis)",
+                    "tooltip": "Camera height (Y axis)",
                 }),
                 "height_end": ("FLOAT", {
                     "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
-                    "tooltip": "结束高度(上升/下降) | End height (rise/fall)",
+                    "tooltip": "End height (rise/fall)",
                 }),
                 "start_angle": ("FLOAT", {
                     "default": 0.0, "min": 0.0, "max": 1.0, "step": 0.01,
-                    "tooltip": "起始角度(0=前方,0.25=侧方) | Start angle offset",
+                    "tooltip": "Start angle offset (0=front, 0.25=side)",
                 }),
                 "pan_speed": ("FLOAT", {
                     "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
-                    "tooltip": "水平摇摄速度 | Horizontal pan speed",
+                    "tooltip": "Horizontal pan speed",
                 }),
                 "tilt_speed": ("FLOAT", {
                     "default": 0.0, "min": -3.14, "max": 3.14, "step": 0.05,
-                    "tooltip": "俯仰速度(弧度) | Vertical tilt speed (rad)",
+                    "tooltip": "Vertical tilt speed (rad)",
                 }),
                 "look_at_y": ("FLOAT", {
                     "default": 0.0, "min": -10.0, "max": 10.0, "step": 0.05,
-                    "tooltip": "注视点高度 | Look-at point Y offset",
+                    "tooltip": "Look-at point Y offset",
                 }),
                 "seed": ("INT", {
                     "default": 42, "min": 0, "max": 0xffffffffffffffff,
                     "control_after_generate": True,
-                    "tooltip": "随机种子 | Random seed",
+                    "tooltip": "Random seed",
                 }),
                 "steps": ("INT", {
                     "default": 4, "min": 1, "max": 100, "step": 1,
-                    "tooltip": "去噪步数(4步蒸馏用4) | Denoise steps",
+                    "tooltip": "Denoise steps (use 4 for 4-step distill)",
                 }),
                 "sampler_name": (["res_multistep", "euler", "euler_cfg_pp",
                                     "dpm_2", "dpm_2_ancestral", "heun", "heunpp2",
                                     "euler_ancestral", "euler_ancestral_cfg_pp"], {
                     "default": "res_multistep",
-                    "tooltip": "采样器 | Sampler",
+                    "tooltip": "Sampler",
                 }),
                 "scheduler": (["simple", "sgm_uniform", "karras",
                                 "exponential", "normal", "ddim_uniform"], {
                     "default": "simple",
-                    "tooltip": "调度器 | Scheduler",
+                    "tooltip": "Scheduler",
                 }),
             },
         }
@@ -315,9 +315,9 @@ class BSAI_SolarWM_H3_Generate:
         try:
             _bsai_alloc = BSAIOrch.allocate("sampling", requester="8191")
             if not _bsai_alloc.ok:
-                print(f"[BSAI-SolarWM-H3] SDK 未取得 gpu1_sampling 租约({_bsai_alloc.reason})，仍按原逻辑采样")
+                print(f"[BSAI-SolarWM-H3] SDK did not acquire gpu1_sampling lease ({_bsai_alloc.reason}); sampling with original logic")
         except Exception as _bsai_ae:
-            print(f"[BSAI-SolarWM-H3] SDK allocate 异常(忽略): {_bsai_ae}")
+            print(f"[BSAI-SolarWM-H3] SDK allocate exception (ignored): {_bsai_ae}")
             _bsai_alloc = None
         try:
             samples = guider.sample(
@@ -349,21 +349,21 @@ class BSAI_SolarWM_H3_Loader:
         return {
             "required": {
                 "base_model": (sorted(unet_models), {
-                    "tooltip": "H3 diffusion model / H3 扩散模型",
+                    "tooltip": "H3 diffusion model",
                 }),
                 "turbo_lora": (sorted(lora_models), {
-                    "tooltip": "4-step distill LoRA / 4步蒸馏 LoRA",
+                    "tooltip": "4-step distill LoRA",
                 }),
                 "turbo_strength": ("FLOAT", {
                     "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
-                    "tooltip": "Turbo LoRA strength / 蒸馏 LoRA 强度",
+                    "tooltip": "Turbo LoRA strength",
                 }),
                 "solarwm_lora": (sorted(lora_models), {
-                    "tooltip": "SolarWM camera adapter LoRA / SolarWM 相机适配器 LoRA",
+                    "tooltip": "SolarWM camera adapter LoRA",
                 }),
                 "solarwm_strength": ("FLOAT", {
                     "default": 1.0, "min": 0.0, "max": 2.0, "step": 0.05,
-                    "tooltip": "SolarWM LoRA strength / SolarWM LoRA 强度",
+                    "tooltip": "SolarWM LoRA strength",
                 }),
             },
         }
@@ -406,7 +406,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "BSAI_SolarWM_H3_Loader": "BSAI SolarWM-H3 Loader (模型加载)",
-    "BSAI_SolarWM_H3_CameraAttach": "BSAI SolarWM-H3 Camera Attach (相机轨迹)",
-    "BSAI_SolarWM_H3_Generate": "BSAI SolarWM-H3 Generate (一键生成)",
+    "BSAI_SolarWM_H3_Loader": "BSAI SolarWM-H3 Loader",
+    "BSAI_SolarWM_H3_CameraAttach": "BSAI SolarWM-H3 Camera Attach",
+    "BSAI_SolarWM_H3_Generate": "BSAI SolarWM-H3 Generate",
 }
