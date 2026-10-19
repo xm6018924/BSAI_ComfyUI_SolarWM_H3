@@ -70,17 +70,17 @@ def _latent_video_dims(latent):
 
 
 class BSAI_SolarWM_H3_CameraAttach:
-    """BSAI SolarWM-H3 相机轨迹注入 / Camera Trajectory Inject.
+    """BSAI SolarWM-H3 camera trajectory inject.
 
     Clones the H3 model and attaches a camera-aware PRoPE path.
     Bypass this node to keep the model stock (A/B reference).
 
-    Parameters / 参数:
-      orbit_turns_环绕圈数: 围绕Y轴旋转圈数 (负=反向), e.g. -0.02=微推
-      radius_起始半径:      起始距离 (世界单位), start distance
-      radius_end_结束半径:   结束距离 (线性推拉), end distance for dolly
-      latent_视频潜空间:     H3 AV LATENT input (required for frame count)
-      positive_正向条件:     Positive CONDITIONING (required for text_len)
+    Parameters:
+      orbit_turns: number of turns around the Y axis (negative = reverse), e.g. -0.02 = slow dolly-in
+      radius:      start camera distance (world units)
+      radius_end:  end camera distance (linear dolly)
+      latent:      H3 AV LATENT input (required for frame count)
+      positive:    Positive CONDITIONING (required for text_len)
     """
 
     @classmethod
@@ -88,15 +88,15 @@ class BSAI_SolarWM_H3_CameraAttach:
         return {
             "required": {
                 "model": ("MODEL",),
-                "orbit_turns_环绕圈数": ("FLOAT", {
+                "orbit_turns": ("FLOAT", {
                     "default": 0.0, "min": -1.0, "max": 1.0, "step": 0.01,
                     "tooltip": "Orbit turns (negative=reverse), e.g. -0.02=slow dolly-in test",
                 }),
-                "radius_起始半径": ("FLOAT", {
+                "radius": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
                     "tooltip": "Start camera distance",
                 }),
-                "radius_end_结束半径": ("FLOAT", {
+                "radius_end": ("FLOAT", {
                     "default": 3.0, "min": 0.1, "max": 100.0, "step": 0.05,
                     "tooltip": "End distance (dolly-in/out)",
                 }),
@@ -111,8 +111,7 @@ class BSAI_SolarWM_H3_CameraAttach:
     CATEGORY = "BSAI/SolarWM-H3"
     DESCRIPTION = "BSAI SolarWM-H3 Camera trajectory inject (fused-PRoPE)"
 
-    def attach(self, model, orbit_turns_环绕圈数, radius_起始半径,
-               radius_end_结束半径, latent, positive):
+    def attach(self, model, orbit_turns, radius, radius_end, latent, positive):
         video = _latent_video_dims(latent)
         if video is None:
             raise ValueError(
@@ -131,9 +130,9 @@ class BSAI_SolarWM_H3_CameraAttach:
             camera=SolarWMCamera(
                 c2w=build_orbit_camera(
                     traj_frames,
-                    turn=float(orbit_turns_环绕圈数),
-                    radius=float(radius_起始半径),
-                    radius_end=float(radius_end_结束半径),
+                    turn=float(orbit_turns),
+                    radius=float(radius),
+                    radius_end=float(radius_end),
                 )
             )
         )
